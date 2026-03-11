@@ -696,11 +696,10 @@
     .footer { background: var(--color-navy); padding: 64px 0 0; }
     .footer-inner {
       display: grid;
-      grid-template-columns: 1.6fr 1fr 1fr 1.2fr;
+      grid-template-columns: 2fr 1fr;
       gap: 48px; margin-bottom: 48px;
     }
-    @media (max-width: 900px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; } }
-    @media (max-width: 500px) { .footer-inner { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) { .footer-inner { grid-template-columns: 1fr; gap: 32px; } }
 
     .footer-col-title {
       font-family: var(--font-heading), var(--font-fallback);
@@ -708,6 +707,11 @@
       letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px;
     }
     .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links li {
+      font-family: var(--font-body), var(--font-fallback);
+      font-size: 14px; color: rgba(255,255,255,0.5);
+      letter-spacing: 0.02em; line-height: 1.5;
+    }
     .footer-links a {
       font-family: var(--font-body), var(--font-fallback);
       font-size: 14px; color: rgba(255,255,255,0.5);
@@ -2315,43 +2319,13 @@
         </div>
 
         <div>
-          <div class="footer-col-title">Diensten</div>
-          <ul class="footer-links">
-            <li><a href="#">Biedverzekering</a></li>
-            <li><a href="#">Hypotheek afsluiten</a></li>
-            <li><a href="#">Eerste huis kopen</a></li>
-            <li><a href="#">Hypotheek oversluiten</a></li>
-            <li><a href="#">Hypotheek verhogen</a></li>
-            <li><a href="#">ZZP-hypotheek</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <div class="footer-col-title">Frits</div>
-          <ul class="footer-links">
-            <li><a href="#">Over ons</a></li>
-            <li><a href="#">Ons team</a></li>
-            <li><a href="#">Werken bij Frits</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </div>
-
-        <div>
           <div class="footer-col-title">Contact</div>
-          <ul class="footer-links">
-            <li><a href="#">020 235 85 30</a></li>
-            <li><a href="#"><span class="__cf_email__" data-cfemail="6109000d0d0e21080a03040f07130815124f0f0d">[email&#160;protected]</span></a></li>
-            <li><a href="#">Ma–Vr 09:00–18:00</a></li>
+          <ul class="footer-links" style="list-style:none;padding:0;margin:0;">
+            <li>Science Park 400<br>1098 XH Amsterdam</li>
+            <li style="margin-top:12px;"><a href="tel:0202358530">020 235 85 30</a></li>
+            <li><a href="mailto:hallo@ikbenfrits.nl">hallo@ikbenfrits.nl</a></li>
+            <li style="margin-top:12px;">Ma–Vr 09:00–18:00</li>
           </ul>
-          <div style="margin-top:24px;">
-            <div class="footer-col-title">Volg ons</div>
-            <ul class="footer-links">
-              <li><a href="#">Instagram</a></li>
-              <li><a href="#">LinkedIn</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ul>
-          </div>
         </div>
 
       </div>
