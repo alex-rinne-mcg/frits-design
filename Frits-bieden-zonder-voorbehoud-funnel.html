@@ -435,13 +435,6 @@
       font-size: 12px; color: var(--color-grey-59); margin-top: 14px;
       line-height: 1.5;
     }
-    .kosten-extra {
-      font-family: var(--font-body), var(--font-fallback);
-      font-size: 12.5px; color: #5a4a00; background: #fffbe6;
-      border: 1px solid #f0d940; border-radius: 8px;
-      padding: 10px 12px; margin-top: 14px; line-height: 1.5;
-    }
-    .kosten-extra strong { font-weight: 700; }
 
 
     /* ── NIET GESCHIKT ──────────────────────────────────────── */
@@ -758,12 +751,12 @@
 
     .footer-bottom {
       background: #0a3148;
-      padding: 18px 112px 80px; /* extra onderaan voor sticky CTA */
+      padding: 18px 112px;
       display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 10px;
     }
-    @media (max-width: 1100px) { .footer-bottom { padding: 18px 48px 80px; } }
-    @media (max-width: 700px)  { .footer-bottom { padding: 16px 24px 80px; } }
+    @media (max-width: 1100px) { .footer-bottom { padding: 18px 48px; } }
+    @media (max-width: 700px)  { .footer-bottom { padding: 16px 24px; } }
     .footer-copy {
       font-family: var(--font-body), var(--font-fallback);
       font-size: 13px; color: rgba(255,255,255,0.3); letter-spacing: 0.02em;
@@ -1551,7 +1544,7 @@
                 <path d="M1.5 7L6.5 12L16.5 2" stroke="#34A853" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
-            <span class="hero-bullet-text">Biedverzekering — bod zonder voorbehoud van financiering</span>
+            <span class="hero-bullet-text">Biedverzekering ,  bod zonder voorbehoud van financiering</span>
           </div>
           <div class="hero-bullet">
             <span style="flex-shrink:0;">
@@ -1567,7 +1560,7 @@
                 <path d="M1.5 7L6.5 12L16.5 2" stroke="#34A853" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
-            <span class="hero-bullet-text">Hypotheek voor vaste prijs — onafhankelijk, alle banken vergeleken</span>
+            <span class="hero-bullet-text">Hypotheek voor vaste prijs ,  onafhankelijk, alle banken vergeleken</span>
           </div>
           <div class="hero-bullet">
             <span style="flex-shrink:0;">
@@ -1699,9 +1692,9 @@
             </div>
           </div>
 
-          <div style="grid-column:1/-1; background:#e8f4fd; border:1px solid #b3d4f0; border-radius:10px; padding:14px 18px; font-family:var(--font-body),var(--font-fallback); font-size:13.5px; color:#1a3a52; line-height:1.5;">
-            <strong>Bieden én hypotheek in één.</strong> De biedverzekering maakt deel uit van het complete Frits-traject. Zo weet je zeker dat je financiering rondkomt én dat de verzekering ook daadwerkelijk uitkeert als dat nodig is.
-          </div>
+          <p class="bied-note" style="grid-column:1/-1;">
+            Let op: de biedverzekering is alleen beschikbaar als je ook de hypotheek via Frits afsluit.
+          </p>
         </div>
 
       </div>
@@ -1752,7 +1745,7 @@
           </svg>
         </div>
         <div class="step-title">Bod uitbrengen zonder voorbehoud</div>
-        <div class="step-body">Met de verzekering op zak breng je een sterk bod uit. Wordt het bod geaccepteerd? Dan betaal je de premie (€775) bij de notaris op de dag van de overdracht — pas dan, niet eerder.</div>
+        <div class="step-body">Met de verzekering op zak breng je een sterk bod uit. Wordt het bod geaccepteerd? Dan betaal je de premie bij de notaris.</div>
         <div class="step-time">Sterkste positie</div>
       </div>
       <div class="step-card">
@@ -1857,9 +1850,9 @@
       <div class="kosten-grid">
 
         <div class="kosten-card">
-          <div class="kosten-card-label">Biedverzekering</div>
+          <div class="kosten-card-label">Product 1</div>
           <div class="kosten-card-price">€775 <span>premie</span></div>
-          <div class="kosten-card-name">Bod zonder voorbehoud</div>
+          <div class="kosten-card-name">Biedverzekering</div>
           <div class="kosten-divider"></div>
           <div class="kosten-list">
             <div class="kosten-list-item">
@@ -1887,13 +1880,13 @@
               <div class="kosten-list-text">Max. koopsom €750.000</div>
             </div>
           </div>
-          <div class="kosten-note">+ Bankgarantie €300 (koopsom t/m €500k) of €400 (boven €500k) — te betalen bij de notaris. Een bankgarantie is het bewijs dat je bank garant staat voor de waarborgsom; de verkoper eist dit standaard bij elk bod.</div>
+          <div class="kosten-note">+ Bankgarantie €300 (tot €500k) of €400 (boven €500k), te betalen bij notaris.</div>
         </div>
 
         <div class="kosten-card">
-          <div class="kosten-card-label">Hypotheekadvies</div>
+          <div class="kosten-card-label">Product 2</div>
           <div class="kosten-card-price">€2.600 <span>vast</span></div>
-          <div class="kosten-card-name">Eerste huis</div>
+          <div class="kosten-card-name">Hypotheek ,  eerste huis</div>
           <div class="kosten-divider"></div>
           <div class="kosten-list">
             <div class="kosten-list-item">
@@ -1921,13 +1914,13 @@
               <div class="kosten-list-text">ZZP'er: +€400 toeslag</div>
             </div>
           </div>
-          <div class="kosten-extra"><strong>Let op:</strong> bovenop het adviseurshonorarium komen gebruikelijke aankoopkosten die je altijd maakt: notaris (~€1.540), taxatie (~€675) en evt. NHG (0,6% van de koopsom). Dit zijn marktstandaard kosten, niet Frits-kosten.</div>
+          <div class="kosten-note">Aanvullende kosten: notaris (~€1.540), taxatie (~€675) en evt. NHG (0,6% koopsom).</div>
         </div>
 
         <div class="kosten-card">
-          <div class="kosten-card-label">Hypotheekadvies</div>
+          <div class="kosten-card-label">Product 3</div>
           <div class="kosten-card-price">€2.950 <span>vast</span></div>
-          <div class="kosten-card-name">Volgend huis / oversluiten</div>
+          <div class="kosten-card-name">Hypotheek ,  volgend huis</div>
           <div class="kosten-divider"></div>
           <div class="kosten-list">
             <div class="kosten-list-item">
@@ -1955,7 +1948,7 @@
               <div class="kosten-list-text">ZZP'er: +€400 toeslag</div>
             </div>
           </div>
-          <div class="kosten-extra"><strong>Let op:</strong> bovenop het adviseurshonorarium komen gebruikelijke aankoopkosten die je altijd maakt: notaris (~€1.540), taxatie (~€675) en evt. NHG (0,6% van de koopsom). Dit zijn marktstandaard kosten, niet Frits-kosten.</div>
+          <div class="kosten-note">Aanvullende kosten: notaris (~€1.540), taxatie (~€675) en evt. NHG (0,6% koopsom).</div>
         </div>
 
       </div>
@@ -2220,7 +2213,7 @@
                 <span>Kan ik de biedverzekering afsluiten zonder hypotheekadvies bij Frits?</span>
                 <span class="faq-icon faq-icon-open">&#8722;</span>
               </div>
-              <div class="faq-a">De biedverzekering is onderdeel van het complete traject bij Frits: bieden én hypotheek in één. Zo kan Frits garanderen dat jouw financiering ook echt rondkomt en de verzekering daadwerkelijk uitkeert als dat nodig is. Je regelt dus in één keer alles.</div>
+              <div class="faq-a">Nee, dat is helaas niet mogelijk. De biedverzekering is onlosmakelijk verbonden aan het hypotheektraject bij Frits. Je kunt de verzekering alleen afsluiten als je ook je hypotheek via ons regelt.</div>
             </div>
             <div class="faq-item">
               <div class="faq-q">
@@ -2384,7 +2377,7 @@
     </div>
 
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 Frits Hypotheekadvies B.V. — AFM-vergunning</span>
+      <span class="footer-copy">© 2025 Frits Hypotheekadvies B.V. ,  AFM-vergunning</span>
       <div class="footer-legal">
         <a href="#">Privacybeleid</a>
         <a href="#">Algemene voorwaarden</a>
