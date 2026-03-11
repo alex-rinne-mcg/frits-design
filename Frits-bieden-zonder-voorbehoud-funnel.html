@@ -2667,41 +2667,128 @@
     }
 
     // ── Toon kalender ─────────────────────────────────────────
+    // ┌─────────────────────────────────────────────────────────┐
+    // │  BOEKINGSTOOL PLACEHOLDER                               │
+    // │  Vervang container.innerHTML door een iframe:           │
+    // │  <iframe src="https://meetings-eu1.hubspot.com/[slug]"  │
+    // │    style="width:100%;min-height:620px;border:none">     │
+    // │  </iframe>                                              │
+    // │  Of een Calendly embed, of een andere scheduler.        │
+    // │  De funnel-data zit in qData en wordt als URL-params    │
+    // │  meegegeven aan bookingUrl hieronder.                   │
+    // └─────────────────────────────────────────────────────────┘
     function qShowCalendar() {
       const container = document.getElementById('qHubspotContainer');
 
       if (!qHsFormCreated) {
         qHsFormCreated = true;
 
-        // Bepaal urgentielabel op basis van antwoorden
-        const isUrgent = (qData.s_situatie === 'bod' || qData.s_urgentie === 'direct');
-        const urgentLabel = isUrgent
-          ? 'Je situatie is urgent — we zorgen dat je snel geholpen wordt.'
-          : 'Kies een moment dat voor jou uitkomt.';
+        // ── Bouw booking-URL met funnel-data als parameters ──
+        const params = new URLSearchParams({
+          utm_source:  'funnel',
+          utm_medium:  'bieden-funnel',
+          situatie:    qData.s_situatie  || '',
+          inkomen:     qData.s_inkomen   || '',
+          urgentie:    qData.s_urgentie  || '',
+          woning:      qData.s_woning    || '',
+          naam:        qData.naam        || '',
+          email:       qData.email       || '',
+          telefoon:    qData.telefoon    || ''
+        });
+        const bookingUrl = 'https://www.ikbenfrits.nl/maak-direct-een-afspraak/?' + params.toString();
+
+        // ── Genereer mock-kalender (placeholder) ─────────────
+        const now        = new Date();
+        const yr         = now.getFullYear();
+        const mo         = now.getMonth();
+        const today      = now.getDate();
+        const monthNames = ['Januari','Februari','Maart','April','Mei','Juni',
+                            'Juli','Augustus','September','Oktober','November','December'];
+        const dayNames   = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
+
+        const daysInMonth = new Date(yr, mo + 1, 0).getDate();
+        const startDow    = (new Date(yr, mo, 1).getDay() + 6) % 7; // ma=0
+
+        // Beschikbare dagen: werkdagen, morgen t/m +14
+        const availSet = new Set();
+        for (let d = today + 1; d <= Math.min(today + 14, daysInMonth); d++) {
+          if ((new Date(yr, mo, d).getDay() + 6) % 7 < 5) availSet.add(d);
+        }
+
+        // Kalender-cellen
+        let cells = '';
+        for (let i = 0; i < startDow; i++) cells += '<div></div>';
+        for (let d = 1; d <= daysInMonth; d++) {
+          const avail   = availSet.has(d);
+          const isToday = d === today;
+          const bg      = avail  ? '#E8F7FF' : 'transparent';
+          const color   = avail  ? '#0B3954' : isToday ? '#0B3954' : '#BBB';
+          const border  = isToday ? '1.5px solid #4AADFF' : '1.5px solid transparent';
+          const fw      = avail || isToday ? '700' : '400';
+          const cur     = avail ? 'pointer' : 'default';
+          cells += `<div style="aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-family:'Roboto',sans-serif;font-size:13px;font-weight:${fw};color:${color};background:${bg};border:${border};cursor:${cur};">${d}</div>`;
+        }
+
+        // Tijdsloten
+        const allSlots   = ['09:00','09:30','10:00','10:30','11:00','11:30',
+                            '13:00','13:30','14:00','14:30','15:00','15:30'];
+        const availSlots = new Set(['09:00','10:00','10:30','11:30','13:30','14:00','15:30']);
+        const slotHTML   = allSlots.map(s => {
+          const av = availSlots.has(s);
+          return `<div style="padding:9px 12px;border-radius:8px;font-family:'Roboto',sans-serif;font-size:13px;font-weight:${av?'600':'400'};color:${av?'#0B3954':'#CCC'};background:${av?'#F0F8FF':'#F9F9F9'};border:1.5px solid ${av?'#4AADFF':'#ECECEC'};cursor:${av?'pointer':'default'};">${s}</div>`;
+        }).join('');
 
         container.innerHTML = `
-          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;padding:48px 32px;text-align:center;background:#fff;border-radius:18px;">
+          <div style="background:#fff;border-radius:18px;overflow:hidden;font-family:'Roboto',sans-serif;">
 
-            <!-- Icoon -->
-            <div style="width:72px;height:72px;border-radius:20px;background:#DBF2FF;display:flex;align-items:center;justify-content:center;margin-bottom:24px;flex-shrink:0;">
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8" y2="14" stroke-width="2.5"/><line x1="12" y1="14" x2="12" y2="14" stroke-width="2.5"/><line x1="16" y1="14" x2="16" y2="14" stroke-width="2.5"/><line x1="8" y1="18" x2="8" y2="18" stroke-width="2.5"/><line x1="12" y1="18" x2="12" y2="18" stroke-width="2.5"/></svg>
+            <!-- Dev-banner -->
+            <div style="background:#FFFBEA;border-bottom:1px solid #FFE58F;padding:9px 16px;display:flex;align-items:center;gap:8px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#D48806" stroke="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              <span style="font-size:11px;font-weight:600;color:#7A5800;letter-spacing:.02em;">PLACEHOLDER</span>
+              <span style="font-size:11px;color:#A07020;">— vervang door <strong>meetings-eu1.hubspot.com/[slug]</strong> iframe, Calendly of andere scheduler</span>
             </div>
 
-            <!-- Tekst -->
-            <p style="font-family:'Roboto',sans-serif;font-size:20px;font-weight:700;color:#0B3954;margin:0 0 10px;">Plan jouw gratis gesprek in</p>
-            <p style="font-family:'Roboto',sans-serif;font-size:15px;color:#666;margin:0 0 32px;max-width:340px;line-height:1.55;">${urgentLabel}<br>Een Frits-adviseur neemt ±20 minuten de tijd voor je — via video of telefoon.</p>
+            <div style="padding:20px 20px 0;display:grid;grid-template-columns:1fr 180px;gap:20px;">
 
-            <!-- CTA knop -->
-            <a href="https://www.ikbenfrits.nl/maak-direct-een-afspraak/"
-               target="_blank"
-               rel="noopener"
-               style="display:inline-flex;align-items:center;gap:10px;background:#0B3954;color:#fff;padding:16px 40px;border-radius:12px;text-decoration:none;font-family:'Roboto',sans-serif;font-weight:700;font-size:16px;letter-spacing:0.01em;box-shadow:0 4px 16px rgba(11,57,84,0.18);transition:transform .15s;">
-              Afspraak inplannen
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+              <!-- Kalender links -->
+              <div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                  <span style="font-size:14px;font-weight:700;color:#0B3954;">${monthNames[mo]} ${yr}</span>
+                  <div style="display:flex;gap:4px;">
+                    <div style="width:28px;height:28px;border-radius:6px;border:1.5px solid #ECECEC;display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;cursor:pointer;">‹</div>
+                    <div style="width:28px;height:28px;border-radius:6px;border:1.5px solid #ECECEC;display:flex;align-items:center;justify-content:center;color:#666;font-size:14px;cursor:pointer;">›</div>
+                  </div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;">
+                  ${dayNames.map(d=>`<div style="text-align:center;font-size:11px;font-weight:600;color:#AAA;padding:3px 0;">${d}</div>`).join('')}
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;">
+                  ${cells}
+                </div>
+                <div style="margin-top:12px;display:flex;align-items:center;gap:12px;">
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#888;"><div style="width:10px;height:10px;border-radius:3px;background:#E8F7FF;border:1px solid #4AADFF;"></div>Beschikbaar</div>
+                  <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#888;"><div style="width:10px;height:10px;border-radius:3px;border:1.5px solid #4AADFF;"></div>Vandaag</div>
+                </div>
+              </div>
 
-            <!-- Trust -->
-            <p style="font-family:'Roboto',sans-serif;font-size:12px;color:#aaa;margin:20px 0 0;">Gratis en vrijblijvend &nbsp;·&nbsp; <strong style="color:#0B3954;">9.7</strong> op Kiyoh</p>
+              <!-- Tijdsloten rechts -->
+              <div>
+                <div style="font-size:13px;font-weight:700;color:#0B3954;margin-bottom:10px;">Tijdstip</div>
+                <div style="display:flex;flex-direction:column;gap:5px;max-height:280px;overflow-y:auto;">
+                  ${slotHTML}
+                </div>
+              </div>
+            </div>
+
+            <!-- Bodem-CTA -->
+            <div style="padding:16px 20px 20px;">
+              <a href="${bookingUrl}" target="_blank" rel="noopener"
+                 style="display:flex;align-items:center;justify-content:center;gap:10px;background:#0B3954;color:#fff;padding:14px;border-radius:12px;text-decoration:none;font-weight:700;font-size:15px;">
+                Afspraak inplannen
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+              <p style="text-align:center;font-size:12px;color:#AAA;margin:10px 0 0;">Gratis en vrijblijvend &nbsp;·&nbsp; <strong style="color:#0B3954;">9.7</strong> op Kiyoh</p>
+            </div>
           </div>`;
       }
 
