@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Huis op het oog? Bied slim en regel je hypotheek — Frits</title>
+  <title>Huis op het oog? Bied slim en regel je hypotheek | Frits</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;600;700&display=swap');
 
@@ -783,9 +783,708 @@
       font-family: var(--font-body), var(--font-fallback);
       font-size: 15px; color: rgba(255,255,255,0.8); letter-spacing: 0.02em;
     }
-  </style>
+  
+    /* ═══════════════════════════════════════════════════════════
+       QUALIFIER OVERLAY — volledig scherm boven landingspagina
+    ═══════════════════════════════════════════════════════════ */
+    #qualifier-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 200;
+      background: #F5F5F5;
+      overflow-y: auto;
+    }
+    #qualifier-overlay.active { display: block; }
+
+    .q-navbar {
+      position: sticky; top: 0; z-index: 10;
+      background: #fff;
+      border-bottom: 1px solid #ECECEC;
+    }
+    .q-navbar-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 112px; height: 62px;
+    }
+    @media (max-width: 1100px) { .q-navbar-inner { padding: 0 48px; } }
+    @media (max-width: 700px)  { .q-navbar-inner { padding: 0 24px; } }
+
+    .q-back-to-landing {
+      display: flex; align-items: center; gap: 8px;
+      background: transparent; border: none; cursor: pointer;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px; color: #979797;
+      transition: color 0.15s;
+    }
+    .q-back-to-landing:hover { color: #0B3954; }
+
+    .q-progress-wrap {
+      background: #fff;
+      border-bottom: 1px solid #ECECEC;
+      padding: 16px 24px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .q-progress-label {
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px; color: #979797; letter-spacing: 0.04em;
+    }
+    .q-progress-bar-wrap {
+      width: 100%; max-width: 480px;
+      height: 5px; background: #ECECEC;
+      border-radius: 9999px; overflow: hidden;
+    }
+    .q-progress-bar-fill {
+      height: 100%; background: #4BFF7D;
+      border-radius: 9999px;
+      transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .q-content {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 0 24px 80px;
+    }
+
+    .q-card {
+      width: 100%; max-width: 580px;
+      background: #fff;
+      border-radius: 30px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+      padding: 48px 52px;
+      margin-top: 36px;
+      animation: qFadeIn 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    @media (max-width: 640px) { .q-card { padding: 32px 24px; margin-top: 20px; } }
+
+    @keyframes qFadeIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .q-eyebrow {
+      font-family: 'Roboto', sans-serif;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #979797; margin-bottom: 10px;
+    }
+    .q-question {
+      font-family: 'Roboto', sans-serif;
+      font-size: 26px; font-weight: 300;
+      color: #000; line-height: 1.25; margin-bottom: 8px;
+    }
+    .q-question strong { font-weight: 700; }
+    .q-sub {
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px; color: #979797;
+      line-height: 1.55; margin-bottom: 28px;
+    }
+
+    .q-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .q-opt {
+      width: 100%; display: flex; align-items: center; gap: 14px;
+      background: #fff;
+      border: 1.5px solid #ECECEC;
+      border-radius: 20px; padding: 16px 20px;
+      cursor: pointer; text-align: left;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+      font-family: 'Roboto', sans-serif;
+    }
+    .q-opt:hover { border-color: #0B3954; background: #F5F5F5; transform: translateY(-1px); }
+    .q-opt.sel { border-color: #4BFF7D; background: #CCFFD5; }
+
+    .q-opt-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #F5F5F5; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    .q-opt.sel .q-opt-icon { background: #4BFF7D; }
+
+    .q-opt-body { flex: 1; }
+    .q-opt-title { font-size: 15px; font-weight: 600; color: #464646; line-height: 1.3; margin-bottom: 2px; }
+    .q-opt-desc  { font-size: 13px; color: #979797; line-height: 1.4; }
+
+    .q-opt-check {
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 1.5px solid #D1D1D1; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .q-opt.sel .q-opt-check { background: #34A853; border-color: #34A853; }
+
+    .q-input-group { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+    .q-input-wrap  { display: flex; flex-direction: column; gap: 6px; }
+    .q-label { font-family: 'Roboto', sans-serif; font-size: 13px; font-weight: 600; color: #464646; }
+    .q-input {
+      width: 100%; padding: 14px 18px;
+      border: 1.5px solid #ECECEC; border-radius: 20px;
+      font-family: 'Roboto', sans-serif; font-size: 15px; color: #464646;
+      outline: none; transition: border-color 0.15s;
+    }
+    .q-input:focus { border-color: #0B3954; }
+    .q-input::placeholder { color: #D1D1D1; }
+
+    .q-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .q-btn-back {
+      display: flex; align-items: center; gap: 8px;
+      background: transparent; border: 1.5px solid #ECECEC;
+      border-radius: 9999px; padding: 12px 22px;
+      font-family: 'Roboto', sans-serif; font-size: 15px; color: #979797;
+      cursor: pointer; transition: border-color 0.15s, color 0.15s;
+    }
+    .q-btn-back:hover { border-color: #0B3954; color: #0B3954; }
+    .q-btn-next {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #4BFF7D; color: #000;
+      border: none; border-radius: 9999px;
+      padding: 14px 32px;
+      font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 600;
+      cursor: pointer; transition: opacity 0.15s, transform 0.1s;
+    }
+    .q-btn-next:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
+    .q-btn-next:disabled { opacity: 0.38; cursor: not-allowed; }
+
+    /* Check scherm — geschikt voor gesprek? */
+    .q-check-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .q-check-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 20px; border-radius: 16px;
+    }
+    .q-check-item.green { background: #CCFFD5; }
+    .q-check-item.red   { background: #FFF0EB; }
+    .q-check-item-icon {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .q-check-item.green .q-check-item-icon { background: #34A853; }
+    .q-check-item.red   .q-check-item-icon { background: #FF6B35; }
+    .q-check-item-text { font-family: 'Roboto', sans-serif; font-size: 14px; color: #464646; line-height: 1.5; }
+    .q-check-item-text strong { font-weight: 600; color: #0B3954; }
+
+    .q-result-banner {
+      border-radius: 20px; padding: 20px 24px;
+      display: flex; gap: 16px; align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .q-result-banner.go   { background: #CCFFD5; border: 1.5px solid #4BFF7D; }
+    .q-result-banner.wait { background: #DBF2FF; border: 1.5px solid #4AADFF; }
+    .q-result-banner-title {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px; font-weight: 700; color: #0B3954; margin-bottom: 4px;
+    }
+    .q-result-banner-text {
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px; color: #464646; line-height: 1.5;
+    }
+
+    /* Disqualificatie */
+    .q-disq-icon {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #DBF2FF;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .q-disq-title {
+      font-family: 'Roboto', sans-serif;
+      font-size: 22px; font-weight: 700; color: #0B3954;
+      margin-bottom: 12px; line-height: 1.3;
+    }
+    .q-disq-text {
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px; color: #666; line-height: 1.6; margin-bottom: 24px;
+    }
+    .q-disq-ctas { display: flex; flex-direction: column; gap: 10px; }
+
+    /* Niet geschikt sectie in check-scherm */
+    .q-niet-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .q-niet-item {
+      display: flex; gap: 12px; align-items: flex-start;
+      background: #F5F5F5; border-radius: 14px; padding: 14px 18px;
+      border-left: 3px solid #FF6B35;
+    }
+    .q-niet-item-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,107,53,0.12);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .q-niet-title { font-family: 'Roboto', sans-serif; font-size: 14px; font-weight: 700; color: #464646; margin-bottom: 2px; }
+    .q-niet-desc  { font-family: 'Roboto', sans-serif; font-size: 13px; color: #979797; line-height: 1.4; }
+
+    /* Note box */
+    .q-note {
+      background: #DBF2FF; border-radius: 16px; padding: 14px 18px;
+      font-family: 'Roboto', sans-serif; font-size: 14px; color: #0B3954;
+      line-height: 1.5; margin-bottom: 20px;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+
+    /* Calendar */
+    .q-cal-meta { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+    .q-cal-meta-item {
+      display: flex; align-items: center; gap: 7px;
+      font-family: 'Roboto', sans-serif; font-size: 13px; color: #666;
+    }
+    .q-cal-dot { width: 7px; height: 7px; border-radius: 50%; background: #4BFF7D; flex-shrink: 0; }
+    .q-hubspot-wrap {
+      border: 1.5px solid #ECECEC; border-radius: 20px;
+      overflow: hidden; min-height: 560px;
+      background: #F5F5F5;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .q-hubspot-ph { text-align: center; padding: 48px 32px; }
+    .q-hubspot-ph-icon {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: #CCFFD5;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .q-hubspot-ph-title { font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 700; color: #0B3954; margin-bottom: 6px; }
+    .q-hubspot-ph-text  { font-family: 'Roboto', sans-serif; font-size: 13px; color: #979797; line-height: 1.5; }
+    .q-hubspot-iframe   { width: 100%; min-height: 560px; border: none; display: block; }
+
+    /* Trust strip */
+    .q-trust {
+      display: flex; align-items: center; justify-content: center;
+      gap: 20px; flex-wrap: wrap; padding: 16px 0; margin-top: 12px;
+    }
+    .q-trust-item {
+      display: flex; align-items: center; gap: 7px;
+      font-family: 'Roboto', sans-serif; font-size: 13px; color: #979797;
+    }
+
+    .q-hidden { display: none !important; }
+
+    /* Wide card for check + calendar screens */
+    .q-card-wide { max-width: 640px; }
+
+</style>
 </head>
 <body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       QUALIFIER OVERLAY
+       Wordt geactiveerd wanneer een CTA-knop op de landingspagina
+       wordt geklikt. Verbergt de landingspagina volledig.
+  ═══════════════════════════════════════════════════════════════ -->
+  <div id="qualifier-overlay">
+
+    <!-- Navbar -->
+    <div class="q-navbar">
+      <div class="q-navbar-inner">
+        <a href="https://ikbenfrits.nl" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+          <svg width="107" height="36" viewBox="0 0 127 42.6" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.5,42.6c4.2,0,7.6-3.4,7.6-7.6s-3.4-7.6-7.6-7.6c-4.2,0-7.6,3.4-7.6,7.6S9.3,42.6,13.5,42.6z" fill="#4BFF7D"/>
+            <path d="M28.7,9.3L27.1,0L0,4.8l1.6,9.3L28.7,9.3z" fill="#4AADFF"/>
+            <path d="M30.9,21.9l-1.6-9.3L2.2,17.4l1.6,9.3L30.9,21.9z" fill="#4AADFF"/>
+            <path d="M49.7,24.6v11.5h-5V7.8h17.8v4.8H49.7v7.2h10.9v4.8L49.7,24.6z" fill="#000"/>
+            <path d="M69.8,15.6v3.2c0.9-2.4,3.1-3.5,5.5-3.5c0.9,0,1.8,0.2,2.8,0.4l-0.8,4.6c-0.8-0.3-1.7-0.5-2.5-0.5c-2.9,0-4.9,1.9-4.9,5.5v10.8h-4.9V15.6H69.8z" fill="#000"/>
+            <path d="M82,15.6h4.9v20.5H82V15.6z" fill="#000"/>
+            <path d="M94.7,15.6v-5.3h4.9v5.3h6.1V20h-6.1v8.7c0,2.3,1.5,3.4,3.3,3.4c1,0,2.1-0.3,3.2-1l1.3,3.6c-1.8,1.2-3.8,1.8-5.7,1.8c-3.9,0-6.9-2.5-6.9-7V20h-4.1v-4.4H94.7z" fill="#000"/>
+            <path d="M118.3,19.2c-1.8,0-2.9,0.8-2.9,2.1c0,1.5,1.4,1.9,4.2,2.4c3.3,0.6,7.4,1.5,7.4,5.9c0,4.2-3.6,6.8-8.3,6.8c-3.4,0-6.9-1.4-9.2-3.9l2.7-3.4c1.7,2.1,4.7,3,6.9,3c1.8,0,3.1-0.6,3.1-1.9c0-1.4-1.3-1.8-3.8-2.3c-3.3-0.6-7.8-1.5-7.8-6.3c0-4.4,3.6-6.5,7.7-6.5c2.8,0,5.6,1,7.6,2.9l-2.5,3.2C121.9,19.8,119.9,19.2,118.3,19.2z" fill="#000"/>
+            <path d="M87.9,9.4c0,1.9-1.4,3.4-3.5,3.4s-3.5-1.5-3.5-3.4c0-2,1.5-3.4,3.5-3.4C86.5,5.9,87.9,7.4,87.9,9.4z" fill="#4BFF7D"/>
+          </svg>
+        </a>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <button class="q-back-to-landing" onclick="closeFunnel()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Terug naar pagina
+          </button>
+          <a href="tel:0202358530" style="font-family:'Roboto',sans-serif;font-size:14px;font-weight:600;color:#0B3954;text-decoration:none;display:none;" id="qPhoneLink">020 235 85 30</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="q-progress-wrap">
+      <div class="q-progress-label" id="qProgressLabel">Stap 1 van 7</div>
+      <div class="q-progress-bar-wrap">
+        <div class="q-progress-bar-fill" id="qProgressBar" style="width:14%;"></div>
+      </div>
+    </div>
+
+    <div class="q-content">
+
+      <!-- ── STAP 1: Situatie ── -->
+      <div class="q-card" id="qs1">
+        <div class="q-eyebrow">Stap 1 van 7</div>
+        <h2 class="q-question">Waar ben je nu in je zoektocht<br><strong>naar een huis?</strong></h2>
+        <p class="q-sub">Zo kunnen we je het beste verder helpen.</p>
+        <div class="q-options">
+          <button class="q-opt" data-val="bod" onclick="qSelect(this,'qs1','s_situatie',1)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Ik heb een huis gevonden en wil bieden</div><div class="q-opt-desc">Ik wil snel een bod uitbrengen</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="zoeken" onclick="qSelect(this,'qs1','s_situatie',1)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Ik ben actief op zoek, maar nog geen bod</div><div class="q-opt-desc">Ik bekijk woningen en wil weten wat ik kan lenen</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="orienteren" onclick="qSelect(this,'qs1','s_situatie',1)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Ik oriënteer me, nog niet actief</div><div class="q-opt-desc">Ik wil weten wat de mogelijkheden zijn</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="oversluiten" onclick="qSelect(this,'qs1','s_situatie',1)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.67"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Ik wil mijn hypotheek oversluiten</div><div class="q-opt-desc">Ik wil besparen op mijn maandlasten</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+        </div>
+        <div class="q-nav">
+          <div></div>
+          <button class="q-btn-next" id="qn1" disabled onclick="qStep1Next()">Volgende <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ── STAP 2: Inkomen ── -->
+      <div class="q-card q-hidden" id="qs2">
+        <div class="q-eyebrow">Stap 2 van 7</div>
+        <h2 class="q-question">Hoe ziet jouw <strong>inkomenssituatie</strong> eruit?</h2>
+        <p class="q-sub">Dit bepaalt welke adviseur en banken het beste bij je passen.</p>
+        <div class="q-options">
+          <button class="q-opt" data-val="loondienst" onclick="qSelect(this,'qs2','s_inkomen',2)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">In loondienst</div><div class="q-opt-desc">Vast of tijdelijk contract bij een werkgever</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="zzp" onclick="qSelect(this,'qs2','s_inkomen',2)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Zelfstandig ondernemer (ZZP/BV)</div><div class="q-opt-desc">Ik werk voor mezelf</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="gemengd" onclick="qSelect(this,'qs2','s_inkomen',2)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Gemengd, partner heeft andere situatie</div><div class="q-opt-desc">Wij kopen samen met verschillende inkomenstypes</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+        </div>
+        <div class="q-nav">
+          <button class="q-btn-back" onclick="qGo('qs1',1)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Terug</button>
+          <button class="q-btn-next" id="qn2" disabled onclick="qGo('qs3',3)">Volgende <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ── STAP 3: Alleen of samen ── -->
+      <div class="q-card q-hidden" id="qs3">
+        <div class="q-eyebrow">Stap 3 van 7</div>
+        <h2 class="q-question">Koop je <strong>alleen of samen?</strong></h2>
+        <p class="q-sub">Relevant voor de hypotheekberekening en het advies.</p>
+        <div class="q-options">
+          <button class="q-opt" data-val="samen" onclick="qSelect(this,'qs3','s_samen',3)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Samen met partner</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="alleen" onclick="qSelect(this,'qs3','s_samen',3)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Alleen</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+        </div>
+        <div class="q-nav">
+          <button class="q-btn-back" onclick="qGo('qs2',2)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Terug</button>
+          <button class="q-btn-next" id="qn3" disabled onclick="qGo('qs4',4)">Volgende <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ── STAP 4: Inkomen ── -->
+      <div class="q-card q-hidden" id="qs4">
+        <div class="q-eyebrow">Stap 4 van 7</div>
+        <h2 class="q-question">Wat is je <strong>gezamenlijk bruto jaarinkomen</strong>?</h2>
+        <p class="q-sub">Bij benadering is prima. Zo kunnen we inschatten wat haalbaar is.</p>
+        <div class="q-options">
+          <button class="q-opt" data-val="onder40" onclick="qSelect(this,'qs4','s_inkband',4)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Minder dan €40.000</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="40tot70" onclick="qSelect(this,'qs4','s_inkband',4)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">€40.000 – €70.000</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="70tot100" onclick="qSelect(this,'qs4','s_inkband',4)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">€70.000 – €100.000</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="boven100" onclick="qSelect(this,'qs4','s_inkband',4)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Meer dan €100.000</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+        </div>
+        <div class="q-nav">
+          <button class="q-btn-back" onclick="qGo('qs3',3)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Terug</button>
+          <button class="q-btn-next" id="qn4" disabled onclick="qStep4Next()">Volgende <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ── STAP 5: Woningtype ── -->
+      <div class="q-card q-hidden" id="qs5">
+        <div class="q-eyebrow">Stap 5 van 7</div>
+        <h2 class="q-question">Heb je al <strong>een koopwoning?</strong></h2>
+        <p class="q-sub">Dit bepaalt welk hypotheekproduct het beste bij je past.</p>
+        <div class="q-options">
+          <button class="q-opt" data-val="eerste" onclick="qSelect(this,'qs5','s_woning',5)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Nee, dit is mijn eerste huis</div><div class="q-opt-desc">Starter, advies vanaf €2.400</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="volgend" onclick="qSelect(this,'qs5','s_woning',5)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Ja, ik ga verhuizen naar een ander huis</div><div class="q-opt-desc">Doorstromer, advies vanaf €2.800</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="oversluiten" onclick="qSelect(this,'qs5','s_woning',5)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.67"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Ja, ik wil mijn hypotheek oversluiten</div><div class="q-opt-desc">Besparen op maandlasten, advies vanaf €2.800</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+        </div>
+        <div class="q-nav">
+          <button class="q-btn-back" onclick="qGo('qs4',4)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Terug</button>
+          <button class="q-btn-next" id="qn5" disabled onclick="qGo('qs6',6)">Volgende <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ── STAP 6: Urgentie ── -->
+      <div class="q-card q-hidden" id="qs6">
+        <div class="q-eyebrow">Stap 6 van 7</div>
+        <h2 class="q-question">Wanneer wil je de hypotheek <strong>rond hebben?</strong></h2>
+        <p class="q-sub">Zo bepalen we of je direct een afspraak inplant of eerst meer informatie nodig hebt.</p>
+        <div class="q-options">
+          <button class="q-opt" data-val="direct" onclick="qSelect(this,'qs6','s_urgentie',6)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Zo snel mogelijk</div><div class="q-opt-desc">Ik heb al een bod gedaan of ga dit week bieden</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="driemaanden" onclick="qSelect(this,'qs6','s_urgentie',6)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Binnen drie maanden</div><div class="q-opt-desc">Ik heb al een paar bezichtingen gedaan</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+          <button class="q-opt" data-val="langer" onclick="qSelect(this,'qs6','s_urgentie',6)">
+            <div class="q-opt-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+            <div class="q-opt-body"><div class="q-opt-title">Binnen zes maanden of langer</div><div class="q-opt-desc">Ik ben nog volop aan het oriënteren</div></div>
+            <div class="q-opt-check"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4 7.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </button>
+        </div>
+        <div class="q-nav">
+          <button class="q-btn-back" onclick="qGo('qs5',5)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Terug</button>
+          <button class="q-btn-next" id="qn6" disabled onclick="qStep6Next()">Volgende <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ── STAP 7: Contactgegevens ── -->
+      <div class="q-card q-hidden" id="qs7">
+        <div class="q-eyebrow">Stap 7 van 7</div>
+        <h2 class="q-question">Bijna klaar. <strong>Hoe kunnen we je bereiken?</strong></h2>
+        <p class="q-sub">Je zit nergens aan vast. Het eerste gesprek is gratis en duurt ±20 minuten.</p>
+        <div class="q-input-group">
+          <div class="q-input-wrap">
+            <label class="q-label" for="qNaam">Naam</label>
+            <input class="q-input" type="text" id="qNaam" placeholder="Voor- en achternaam" oninput="qCheckContact()">
+          </div>
+          <div class="q-input-wrap">
+            <label class="q-label" for="qTel">Telefoonnummer</label>
+            <input class="q-input" type="tel" id="qTel" placeholder="06 12 34 56 78" oninput="qCheckContact()">
+          </div>
+          <div class="q-input-wrap">
+            <label class="q-label" for="qEmail">E-mailadres</label>
+            <input class="q-input" type="email" id="qEmail" placeholder="jouw@email.nl" oninput="qCheckContact()">
+          </div>
+        </div>
+        <div class="q-note">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span>We delen je gegevens nooit met derden en gebruiken ze alleen voor je hypotheekadvies.</span>
+        </div>
+        <div class="q-nav">
+          <button class="q-btn-back" onclick="qShowOnly('qsCheck');qSetProgress('Jouw situatie',95);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Terug</button>
+          <button class="q-btn-next" id="qn7" disabled onclick="qGo('qsCommitment',8)">Verder <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+
+      <!-- ── COMMITMENT: Bevestiging aanwezigheid ── -->
+      <div class="q-card q-hidden" id="qsCommitment">
+        <div class="q-eyebrow">Bijna klaar</div>
+        <h2 class="q-question">Eén ding nog,<br><strong>voordat je een moment kiest.</strong></h2>
+        <p class="q-sub">Een adviseur van Frits blokkeert speciaal tijd voor jou. We willen er zeker van zijn dat je er ook bent.</p>
+
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px;">
+          <label style="display:flex;align-items:flex-start;gap:14px;background:#F5F5F5;border-radius:16px;padding:18px 20px;cursor:pointer;border:1.5px solid #ECECEC;transition:border-color 0.15s;" id="commitLabel1">
+            <input type="checkbox" id="commit1" onchange="qCheckCommitment()" style="width:20px;height:20px;flex-shrink:0;margin-top:1px;accent-color:#0B3954;cursor:pointer;">
+            <div>
+              <div style="font-family:'Roboto',sans-serif;font-size:15px;font-weight:600;color:#464646;margin-bottom:3px;">Ik neem de tijd voor dit gesprek</div>
+              <div style="font-family:'Roboto',sans-serif;font-size:13px;color:#979797;line-height:1.4;">Het gesprek duurt ±20 minuten. Ik reserveer dit moment voor mezelf.</div>
+            </div>
+          </label>
+          <label style="display:flex;align-items:flex-start;gap:14px;background:#F5F5F5;border-radius:16px;padding:18px 20px;cursor:pointer;border:1.5px solid #ECECEC;transition:border-color 0.15s;" id="commitLabel2">
+            <input type="checkbox" id="commit2" onchange="qCheckCommitment()" style="width:20px;height:20px;flex-shrink:0;margin-top:1px;accent-color:#0B3954;cursor:pointer;">
+            <div>
+              <div style="font-family:'Roboto',sans-serif;font-size:15px;font-weight:600;color:#464646;margin-bottom:3px;">Ik ben aanwezig op het geplande moment</div>
+              <div style="font-family:'Roboto',sans-serif;font-size:13px;color:#979797;line-height:1.4;">Kan ik toch niet? Dan zeg ik de afspraak minstens 24 uur van tevoren af.</div>
+            </div>
+          </label>
+        </div>
+
+        <div style="background:#CCFFD5;border-radius:16px;padding:16px 20px;display:flex;gap:12px;align-items:flex-start;margin-bottom:24px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <div style="font-family:'Roboto',sans-serif;font-size:14px;color:#0B3954;line-height:1.5;">
+            <strong>De adviseur bereidt zich voor op jouw gesprek.</strong> Op basis van je antwoorden koppelen we je aan de adviseur die het beste bij jouw situatie past.
+          </div>
+        </div>
+
+        <div class="q-nav">
+          <button class="q-btn-back" onclick="qGo('qs7',7)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Terug</button>
+          <button class="q-btn-next" id="qnCommit" disabled onclick="qShowCheck()">Moment kiezen <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ── CHECK: Wanneer is een gesprek geschikt? ── -->
+      <div class="q-card q-card-wide q-hidden" id="qsCheck">
+        <div class="q-eyebrow">Geschiktheidscheck</div>
+        <h2 class="q-question">Is een <strong>adviesgesprek</strong> nu het juiste voor jou?</h2>
+        <p class="q-sub">Even eerlijk checken. Zo weet je zeker dat je er iets aan hebt.</p>
+
+        <div class="q-check-list" id="qCheckItems">
+          <!-- Dynamisch ingevuld door JS -->
+        </div>
+
+        <div class="q-result-banner" id="qResultBanner">
+          <!-- Dynamisch ingevuld door JS -->
+        </div>
+
+        <!-- Niet-geschikt blok (alleen zichtbaar als niet klaar) -->
+        <div id="qNietGeschiktBlok" class="q-hidden">
+          <p style="font-family:'Roboto',sans-serif;font-size:14px;font-weight:600;color:#0B3954;margin-bottom:12px;">Wanneer is een gesprek wél het juiste moment?</p>
+          <div class="q-niet-list">
+            <div class="q-niet-item">
+              <div class="q-niet-item-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+              <div><div class="q-niet-title">Je bent actief aan het zoeken of hebt een woning op het oog</div><div class="q-niet-desc">Dan is een gesprek direct nuttig ,  we bespreken wat je kunt lenen en hoe je het sterkste staat.</div></div>
+            </div>
+            <div class="q-niet-item">
+              <div class="q-niet-item-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+              <div><div class="q-niet-title">Je verwacht binnen drie maanden een bod uit te brengen</div><div class="q-niet-desc">Dan helpen we je nu al goed voorbereid, inclusief Biedcertificaat als dat past.</div></div>
+            </div>
+            <div class="q-niet-item">
+              <div class="q-niet-item-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+              <div><div class="q-niet-title">Je wilt weten wat oversluiten jou oplevert</div><div class="q-niet-desc">We berekenen eerlijk of oversluiten nu nuttig is ,  ook als het antwoord nee is.</div></div>
+            </div>
+          </div>
+          <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="tel:0202358530" style="display:inline-flex;align-items:center;gap:10px;background:#0B3954;color:white;border-radius:9999px;padding:13px 26px;font-family:'Roboto',sans-serif;font-size:15px;font-weight:600;text-decoration:none;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              Bel ons: 020 235 85 30
+            </a>
+            <button onclick="closeFunnel()" style="background:transparent;border:1.5px solid #D1D1D1;border-radius:9999px;padding:12px 22px;font-family:'Roboto',sans-serif;font-size:15px;color:#666;cursor:pointer;">
+              Terug naar pagina
+            </button>
+          </div>
+        </div>
+
+        <div class="q-nav" id="qCheckNav">
+          <button class="q-btn-back" onclick="qGo('qs6',6)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Terug</button>
+          <button class="q-btn-next" id="qnCheck" onclick="qShowContact()">Gegevens invullen <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ── DISQUALIFICATIE: Oriënterend ── -->
+      <div class="q-card q-hidden" id="qsDisqOrienteren">
+        <div class="q-disq-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="q-disq-title">Een gesprek is op dit moment nog niet het meest nuttig</div>
+        <p class="q-disq-text">
+          Je oriënteert je nog, en dat is prima. Maar een adviesgesprek wordt pas echt nuttig als je een woning op het oog hebt of actief aan het zoeken bent. Dan kunnen we concreet berekenen wat je kunt lenen en hoe je het sterkst staat.<br><br>
+          Wel alvast weten waar je aan toe bent? Gebruik onze gratis rekentool om je maximale hypotheek te berekenen.
+        </p>
+        <div class="q-disq-ctas">
+          <a href="https://ikbenfrits.nl/maximale-hypotheek-berekenen" style="display:inline-flex;align-items:center;gap:10px;background:#4BFF7D;color:#000;border-radius:9999px;padding:14px 28px;font-family:'Roboto',sans-serif;font-size:15px;font-weight:600;text-decoration:none;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Maximale hypotheek berekenen
+          </a>
+          <button onclick="closeFunnel()" style="background:transparent;border:1.5px solid #D1D1D1;border-radius:9999px;padding:12px 22px;font-family:'Roboto',sans-serif;font-size:15px;color:#666;cursor:pointer;">
+            Terug naar pagina
+          </button>
+        </div>
+      </div>
+
+      <!-- ── DISQUALIFICATIE: Inkomen te laag ── -->
+      <div class="q-card q-hidden" id="qsDisqInkomen">
+        <div class="q-disq-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        </div>
+        <div class="q-disq-title">Op dit moment kunnen we je nog niet via dit formulier verder helpen</div>
+        <p class="q-disq-text">
+          Met een gezamenlijk inkomen onder de €40.000 is het in de huidige markt lastig om een hypotheek te krijgen voor een gemiddelde woning. Maar het hoeft niet het einde te zijn ,  er zijn situaties waarin het wél kan, bijvoorbeeld met spaargeld of NHG.<br><br>
+          Bel ons gerust. We kijken eerlijk met je mee.
+        </p>
+        <div class="q-disq-ctas">
+          <a href="tel:0202358530" style="display:inline-flex;align-items:center;gap:10px;background:#0B3954;color:white;border-radius:9999px;padding:14px 28px;font-family:'Roboto',sans-serif;font-size:15px;font-weight:600;text-decoration:none;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            020 235 85 30
+          </a>
+          <button onclick="qGo('qs4',4)" style="background:transparent;border:1.5px solid #D1D1D1;border-radius:9999px;padding:12px 22px;font-family:'Roboto',sans-serif;font-size:15px;color:#666;cursor:pointer;">
+            Antwoord aanpassen
+          </button>
+        </div>
+      </div>
+
+      <!-- ── KALENDER ── -->
+      <div class="q-card q-card-wide q-hidden" id="qsCalendar">
+        <div class="q-eyebrow">Afspraak inplannen</div>
+        <h2 class="q-question"><strong>Kies een moment</strong> dat voor jou uitkomt</h2>
+        <p class="q-sub">Een adviseur van Frits neemt het gesprek met je door ,  gratis en vrijblijvend.</p>
+        <div class="q-cal-meta">
+          <div class="q-cal-meta-item"><span class="q-cal-dot"></span>Gratis eerste gesprek</div>
+          <div class="q-cal-meta-item"><span class="q-cal-dot"></span>±20 minuten</div>
+          <div class="q-cal-meta-item"><span class="q-cal-dot"></span>Via video of telefoon</div>
+        </div>
+        <!--
+          ╔══════════════════════════════════════════════════════╗
+          ║  HUBSPOT MEETINGS — ROUTINGLOGICA                   ║
+          ╠══════════════════════════════════════════════════════╣
+          ║  FAST TRACK  → s_situatie='bod' OF s_urgentie='direct'
+          ║  ZZP         → s_inkomen='zzp' OF s_inkomen='gemengd'
+          ║  OVERSLUITEN → s_situatie='oversluiten'
+          ║  DEFAULT     → alle overige gevallen
+          ║                                                      ║
+          ║  Vervang de slugs in HUBSPOT_SLUGS (in <script>)    ║
+          ╚══════════════════════════════════════════════════════╝
+        -->
+        <div class="q-hubspot-wrap" id="qHubspotContainer">
+          <div class="q-hubspot-ph">
+            <div class="q-hubspot-ph-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34A853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="q-hubspot-ph-title">Kalender wordt hier ingeladen</div>
+            <div class="q-hubspot-ph-text">Vervang dit blok door een HubSpot Meetings iframe.<br>Zie de routinglogica in de broncode.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust strip -->
+      <div class="q-trust">
+        <div class="q-trust-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34A853" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Je gegevens zijn veilig
+        </div>
+        <div class="q-trust-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34A853" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Gratis en vrijblijvend
+        </div>
+        <div class="q-trust-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#34A853" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Antwoord binnen 24 uur
+        </div>
+        <div class="q-trust-item">
+          <strong style="color:#0B3954;">9.7</strong> op Kiyoh ,  1.504 reviews
+        </div>
+      </div>
+
+    </div><!-- /q-content -->
+  </div><!-- /qualifier-overlay -->
+
+
 
   <!-- ══════════════════════════════════════════════════════════
        NAVBAR
@@ -845,7 +1544,7 @@
                 <path d="M1.5 7L6.5 12L16.5 2" stroke="#34A853" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
-            <span class="hero-bullet-text">Biedverzekering — bod zonder voorbehoud van financiering</span>
+            <span class="hero-bullet-text">Biedverzekering ,  bod zonder voorbehoud van financiering</span>
           </div>
           <div class="hero-bullet">
             <span style="flex-shrink:0;">
@@ -861,7 +1560,7 @@
                 <path d="M1.5 7L6.5 12L16.5 2" stroke="#34A853" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
-            <span class="hero-bullet-text">Hypotheek voor vaste prijs — onafhankelijk, alle banken vergeleken</span>
+            <span class="hero-bullet-text">Hypotheek voor vaste prijs ,  onafhankelijk, alle banken vergeleken</span>
           </div>
           <div class="hero-bullet">
             <span style="flex-shrink:0;">
@@ -1011,7 +1710,7 @@
       <div class="steps-header">
         <div class="section-eyebrow">Zo werkt het</div>
         <h2 class="section-h2">Van huis gevonden<br>tot <strong>sleutels in handen</strong></h2>
-        <p class="section-sub">In vier stappen regel je biedverzekering en hypotheek — snel, transparant en met persoonlijk advies.</p>
+        <p class="section-sub">In vier stappen regel je biedverzekering en hypotheek ,  snel, transparant en met persoonlijk advies.</p>
       </div>
     </div>
     <div class="steps-grid">
@@ -1024,7 +1723,7 @@
         </div>
         <div class="step-title">Gratis gesprek met jouw adviseur</div>
         <div class="step-body">Een gecertificeerde hypotheekadviseur beoordeelt jouw financiële situatie, bespreekt het bod en legt uit wat je kunt lenen.</div>
-        <div class="step-time">Gratis &amp; vrijblijvend</div>
+        <div class="step-time">Gratis en vrijblijvend</div>
       </div>
       <div class="step-card">
         <div class="step-num">02</div>
@@ -1076,7 +1775,7 @@
           <div class="section-eyebrow">Hypotheek afsluiten</div>
           <h2 class="hypo-h2">Jouw hypotheek,<br><strong>vaste prijs.</strong></h2>
           <p class="hypo-sub">
-            Frits vergelijkt alle banken — ook de banken waar wij de hypotheek niet zelf regelen. Zo weet je zeker dat jij de beste deal krijgt, niet degene met de hoogste provisie.
+            Frits vergelijkt alle banken ,  ook de banken waar wij de hypotheek niet zelf regelen. Zo weet je zeker dat jij de beste deal krijgt, niet degene met de hoogste provisie.
           </p>
           <div style="display:flex;gap:32px;margin-bottom:32px;flex-wrap:wrap;">
             <div>
@@ -1119,7 +1818,7 @@
               </svg>
             </div>
             <div class="hypo-card-title">Gecertificeerde adviseurs</div>
-            <div class="hypo-card-text">Persoonlijk contact met een erkend hypotheekadviseur via video, telefoon of chat — altijd bereikbaar.</div>
+            <div class="hypo-card-text">Persoonlijk contact met een erkend hypotheekadviseur via video, telefoon of chat ,  altijd bereikbaar.</div>
           </div>
           <div class="hypo-card">
             <div class="hypo-card-icon">
@@ -1187,7 +1886,7 @@
         <div class="kosten-card">
           <div class="kosten-card-label">Product 2</div>
           <div class="kosten-card-price">€2.600 <span>vast</span></div>
-          <div class="kosten-card-name">Hypotheek — eerste huis</div>
+          <div class="kosten-card-name">Hypotheek ,  eerste huis</div>
           <div class="kosten-divider"></div>
           <div class="kosten-list">
             <div class="kosten-list-item">
@@ -1221,7 +1920,7 @@
         <div class="kosten-card">
           <div class="kosten-card-label">Product 3</div>
           <div class="kosten-card-price">€2.950 <span>vast</span></div>
-          <div class="kosten-card-name">Hypotheek — volgend huis</div>
+          <div class="kosten-card-name">Hypotheek ,  volgend huis</div>
           <div class="kosten-divider"></div>
           <div class="kosten-list">
             <div class="kosten-list-item">
@@ -1271,7 +1970,7 @@
             Frits doet zijn best om iedereen te helpen, maar de biedverzekering is niet voor iedereen beschikbaar. Hier zijn de situaties waarbij het helaas niet mogelijk is.
           </p>
           <p class="niet-sub" style="margin-top:-10px;">
-            Twijfel je of jij in aanmerking komt? Maak dan een gratis afspraak — we kijken samen wat wel mogelijk is.
+            Twijfel je of jij in aanmerking komt? Maak dan een gratis afspraak ,  we kijken samen wat wel mogelijk is.
           </p>
           <div style="margin-top:20px;">
             <a href="#afspraak" class="btn btn-primary">Maak gratis afspraak</a>
@@ -1321,7 +2020,7 @@
               </div>
               <div>
                 <div class="niet-item-title">Woning slaagt niet voor de taxatie op afstand</div>
-                <div class="niet-item-text">De woning wordt digitaal getaxeerd. Slaagt de woning niet voor deze keuring — bijv. bij ernstige gebreken of te hoog bod — dan vervalt de dekking.</div>
+                <div class="niet-item-text">De woning wordt digitaal getaxeerd. Slaagt de woning niet voor deze keuring ,  bijv. bij ernstige gebreken of te hoog bod ,  dan vervalt de dekking.</div>
               </div>
             </div>
             <div class="niet-item">
@@ -1437,7 +2136,7 @@
           <span class="kiyoh-score" style="font-size:19px;">9.7</span>
         </div>
         <div class="kiyoh-info">
-          <div class="kiyoh-name">Kiyoh — Frits Hypotheekadvies</div>
+          <div class="kiyoh-name">Kiyoh ,  Frits Hypotheekadvies</div>
           <div class="kiyoh-stars">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="#FFC107"><path d="M8 1l1.8 3.6 4 .6-2.9 2.8.7 4L8 10l-3.6 1.9.7-4L2.2 5.2l4-.6z"/></svg>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="#FFC107"><path d="M8 1l1.8 3.6 4 .6-2.9 2.8.7 4L8 10l-3.6 1.9.7-4L2.2 5.2l4-.6z"/></svg>
@@ -1459,7 +2158,7 @@
             <svg width="14" height="14" viewBox="0 0 16 16" fill="#FFC107"><path d="M8 1l1.8 3.6 4 .6-2.9 2.8.7 4L8 10l-3.6 1.9.7-4L2.2 5.2l4-.6z"/></svg>
           </div>
           <div class="review-title">Bod geaccepteerd dankzij de biedverzekering</div>
-          <div class="review-text">We stonden al drie keer met voorbehoud voor een huis en verloren steeds. Met de biedverzekering van Frits deden we ons eerste bod zonder voorbehoud — en kregen het huis.</div>
+          <div class="review-text">We stonden al drie keer met voorbehoud voor een huis en verloren steeds. Met de biedverzekering van Frits deden we ons eerste bod zonder voorbehoud ,  en kregen het huis.</div>
           <div class="review-author">Thomas &amp; Lena, Amsterdam</div>
         </div>
         <div class="review-card">
@@ -1661,7 +2360,7 @@
           <div class="footer-col-title">Contact</div>
           <ul class="footer-links">
             <li><a href="#">020 235 85 30</a></li>
-            <li><a href="#">hallo@ikbenfrits.nl</a></li>
+            <li><a href="#"><span class="__cf_email__" data-cfemail="6109000d0d0e21080a03040f07130815124f0f0d">[email&#160;protected]</span></a></li>
             <li><a href="#">Ma–Vr 09:00–18:00</a></li>
           </ul>
           <div style="margin-top:24px;">
@@ -1678,7 +2377,7 @@
     </div>
 
     <div class="footer-bottom">
-      <span class="footer-copy">© 2025 Frits Hypotheekadvies B.V. — AFM-vergunning</span>
+      <span class="footer-copy">© 2025 Frits Hypotheekadvies B.V. ,  AFM-vergunning</span>
       <div class="footer-legal">
         <a href="#">Privacybeleid</a>
         <a href="#">Algemene voorwaarden</a>
@@ -1691,10 +2390,328 @@
   <!-- ══════════════════════════════════════════════════════════
        STICKY CTA BAR
   ══════════════════════════════════════════════════════════ -->
-  <div class="sticky-cta">
+  <!-- STICKY CTA BAR -->
+  <div class="sticky-cta" id="stickyCta">
     <span class="sticky-cta-text">Huis gevonden? Bied slim met Frits.</span>
-    <a href="#afspraak" class="btn btn-primary btn-sm">Gratis afspraak</a>
+    <button onclick="openFunnel()" style="background:#4BFF7D;color:#000;border:none;border-radius:9999px;padding:12px 24px;font-family:'Roboto',sans-serif;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap;">Afspraak maken</button>
   </div>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════
+    //  QUALIFIER STATE
+    // ═══════════════════════════════════════════════════════════
+    const qData = {
+      s_situatie: null,
+      s_inkomen:  null,
+      s_samen:    null,
+      s_inkband:  null,
+      s_woning:   null,
+      s_urgentie: null,
+      naam: '', telefoon: '', email: ''
+    };
+    window.qualifierData = qData;
+
+    // HubSpot meeting slugs ,  vervang met echte slugs
+    const HUBSPOT_SLUGS = {
+      fast_track:  'frits-adviseur-fasttrack',
+      zzp:         'frits-adviseur-zzp',
+      oversluiten: 'frits-adviseur-oversluiten',
+      default:     'frits-adviseur-algemeen'
+    };
+
+    // ── Open funnel ───────────────────────────────────────────
+    function openFunnel() {
+      document.getElementById('qualifier-overlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      // Toon telefoonnummer in navbar
+      document.getElementById('qPhoneLink').style.display = 'block';
+      // Zorg dat stap 1 actief is
+      qShowOnly('qs1');
+      qSetProgress('Stap 1 van 7', 14);
+      window.scrollTo(0,0);
+    }
+
+    function closeFunnel() {
+      document.getElementById('qualifier-overlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // ── Hulpfuncties ──────────────────────────────────────────
+    function qShowOnly(id) {
+      document.querySelectorAll('#qualifier-overlay .q-card').forEach(c => c.classList.add('q-hidden'));
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.remove('q-hidden');
+        // Scroll overlay naar top
+        document.getElementById('qualifier-overlay').scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function qSetProgress(label, pct) {
+      document.getElementById('qProgressLabel').textContent = label;
+      document.getElementById('qProgressBar').style.width = pct + '%';
+    }
+
+    function qGo(targetId, stepNum) {
+      qShowOnly(targetId);
+      if (stepNum && stepNum <= 7) qSetProgress('Stap ' + stepNum + ' van 7', Math.round((stepNum/7)*100));
+      else if (stepNum === 8) qSetProgress('Bevestiging', 90);
+    }
+
+    // ── Optie selecteren ──────────────────────────────────────
+    function qSelect(btn, cardId, key, stepNum) {
+      document.getElementById(cardId).querySelectorAll('.q-opt').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+      qData[key] = btn.dataset.val;
+      const nextBtn = document.getElementById('qn' + stepNum);
+      if (nextBtn) nextBtn.disabled = false;
+    }
+
+    // ── Stap 1: altijd door naar stap 2 ──────────────────────
+    function qStep1Next() {
+      qGo('qs2', 2);
+    }
+
+    // ── Stap 4: altijd door naar stap 5 ──────────────────────
+    function qStep4Next() {
+      qGo('qs5', 5);
+    }
+
+    // ── Contactvelden valideren ───────────────────────────────
+    function qCheckContact() {
+      const naam  = document.getElementById('qNaam').value.trim();
+      const tel   = document.getElementById('qTel').value.trim();
+      const email = document.getElementById('qEmail').value.trim();
+      document.getElementById('qn7').disabled = !(naam.length > 1 && tel.length > 8 && email.includes('@'));
+    }
+
+
+
+    // ── Stap 6 → check-scherm (sla contactstap over) ─────────
+    function qStep6Next() {
+      qShowCheck();
+    }
+
+    // ── Vanuit check-scherm naar contactgegevens ──────────────
+    function qShowContact() {
+      qGo('qs7', 7);
+      qSetProgress('Jouw gegevens', 96);
+    }
+
+    // ── Commitment checkboxes ──────────────────────────────────
+    function qCheckCommitment() {
+      const c1 = document.getElementById('commit1').checked;
+      const c2 = document.getElementById('commit2').checked;
+      document.getElementById('qnCommit').disabled = !(c1 && c2);
+      // Visuele feedback op labels
+      document.getElementById('commitLabel1').style.borderColor = c1 ? '#4BFF7D' : '#ECECEC';
+      document.getElementById('commitLabel1').style.background   = c1 ? '#CCFFD5' : '#F5F5F5';
+      document.getElementById('commitLabel2').style.borderColor = c2 ? '#4BFF7D' : '#ECECEC';
+      document.getElementById('commitLabel2').style.background   = c2 ? '#CCFFD5' : '#F5F5F5';
+    }
+
+    // ── Toon check-scherm ─────────────────────────────────────
+    function qShowCheck() {
+      // Contactgegevens worden pas later gevraagd (stap 7 komt ná de check)
+      const container  = document.getElementById('qCheckItems');
+      const banner     = document.getElementById('qResultBanner');
+      const nietBlok   = document.getElementById('qNietGeschiktBlok');
+      const checkNav   = document.getElementById('qCheckNav');
+
+      // Bepaal per signaal wat de situatie is
+      const isOrienteren = qData.s_situatie === 'orienteren';
+      const isLaagInkomen = qData.s_inkband === 'onder40';
+      const isLangeTermijn = qData.s_urgentie === 'langer';
+      const isKlaar = !isOrienteren && !isLaagInkomen && !isLangeTermijn;
+
+      // ── Informatiekaarten per situatie ──────────────────────
+      const cards = [];
+
+      // Situatie-kaart
+      const situatieTekst = {
+        bod:         { icon: '🏠', title: 'Je hebt een woning op het oog', desc: 'Dan is een gesprek nu direct nuttig. We bespreken je financiële situatie, wat je kunt bieden en hoe je het sterkst staat.', color: 'green' },
+        zoeken:      { icon: '🔍', title: 'Je bent actief aan het zoeken', desc: 'Goed moment voor een gesprek. Zo weet je precies wat je kunt lenen en hoe je je het beste voorbereidt op een bod.', color: 'green' },
+        oversluiten: { icon: '🔄', title: 'Je wilt je hypotheek oversluiten', desc: 'We berekenen eerlijk of oversluiten nu iets oplevert voor jou, ook als het antwoord nee is.', color: 'green' },
+        orienteren:  { icon: '💡', title: 'Je oriënteert je nog', desc: 'Nog niet actief zoekend. Een gesprek heeft het meeste zin zodra je een woning op het oog hebt of actief begint met zoeken. Wel alvast weten wat je kunt lenen? Gebruik onze gratis rekentool.', color: 'blue' }
+      };
+      const sit = situatieTekst[qData.s_situatie] || situatieTekst.orienteren;
+      cards.push(sit);
+
+      // Inkomen-kaart
+      if (isLaagInkomen) {
+        cards.push({
+          icon: '💬',
+          title: 'Inkomen onder €40.000 ,  niet voor iedereen hetzelfde',
+          desc: 'In de huidige markt is het met een inkomen onder de €40.000 lastig om een reguliere hypotheek te krijgen. Toch zijn er soms opties: denk aan een startershypotheek met NHG, een familiebank-constructie of spaargeld als aanvulling. Gebruik onze rekentool om te zien wat er in jouw situatie mogelijk is, en neem contact op zodra je een woning op het oog hebt.',
+          color: 'blue'
+        });
+      } else {
+        const inkLabels = { '40tot70': '€40.000–€70.000', '70tot100': '€70.000–€100.000', boven100: 'Meer dan €100.000' };
+        cards.push({
+          icon: '✓',
+          title: 'Inkomen: ' + (inkLabels[qData.s_inkband] || ''),
+          desc: 'Je inkomen is realistisch voor een hypotheek. Een adviseur berekent precies wat er voor jou mogelijk is.',
+          color: 'green'
+        });
+      }
+
+      // Urgentie-kaart
+      if (isLangeTermijn) {
+        cards.push({
+          icon: '📅',
+          title: 'Je planning: binnen zes maanden of later',
+          desc: 'Je bent nog niet in de actiefase. Een gesprek heeft het meeste zin zodra je actief gaat zoeken of een woning op het oog hebt. Tot die tijd helpt onze rekentool je alvast een goed beeld te krijgen van wat je kunt lenen.',
+          color: 'blue'
+        });
+      } else {
+        const urgLabels = { direct: 'Zo snel mogelijk', driemaanden: 'Binnen drie maanden' };
+        cards.push({
+          icon: '✓',
+          title: 'Planning: ' + (urgLabels[qData.s_urgentie] || ''),
+          desc: 'Je tijdlijn past goed bij een adviesgesprek nu.',
+          color: 'green'
+        });
+      }
+
+      // ── Render kaarten ──────────────────────────────────────
+      const colorMap = {
+        green: { bg: '#CCFFD5', border: '#4BFF7D', iconBg: '#34A853' },
+        blue:  { bg: '#DBF2FF', border: '#4AADFF', iconBg: '#4AADFF' }
+      };
+      container.innerHTML = cards.map(c => {
+        const col = colorMap[c.color] || colorMap.blue;
+        return `
+          <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-radius:16px;background:${col.bg};border:1.5px solid ${col.border};margin-bottom:10px;">
+            <div style="width:32px;height:32px;border-radius:50%;background:${col.iconBg};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;">${
+              c.color === 'green'
+                ? '<svg width="14" height="11" viewBox="0 0 14 11" fill="none"><path d="M1 5.5L5 9.5L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+                : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>'
+            }</div>
+            <div>
+              <div style="font-family:'Roboto',sans-serif;font-size:14px;font-weight:700;color:#0B3954;margin-bottom:4px;">${c.title}</div>
+              <div style="font-family:'Roboto',sans-serif;font-size:13px;color:#464646;line-height:1.55;">${c.desc}</div>
+            </div>
+          </div>`;
+      }).join('');
+
+      // ── Resultaatbanner + vervolgacties ─────────────────────
+      if (isKlaar) {
+        banner.className = 'q-result-banner go';
+        banner.innerHTML = `
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><circle cx="12" cy="12" r="12" fill="#34A853"/><path d="M7 12l3 3 7-7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <div class="q-result-banner-title">Een adviesgesprek is nu nuttig voor jou</div>
+            <div class="q-result-banner-text">Plan een moment in. Gratis, vrijblijvend, ±20 minuten.</div>
+          </div>`;
+        nietBlok.classList.add('q-hidden');
+        checkNav.classList.remove('q-hidden');
+      } else {
+        banner.className = 'q-result-banner wait';
+        banner.innerHTML = `
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><circle cx="12" cy="12" r="12" fill="#4AADFF"/><path d="M12 7v5l3 3" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div>
+            <div class="q-result-banner-title">Nu nog niet het beste moment ,  maar er zijn opties</div>
+            <div class="q-result-banner-text">Zie hieronder wat je nu al kunt doen.</div>
+          </div>`;
+
+        // Bouw vervolgacties voor jouw situatie
+        let acties = '';
+
+        if (isLaagInkomen || isOrienteren || isLangeTermijn) {
+          acties += `
+            <div style="margin-top:20px;">
+              <div style="font-family:'Roboto',sans-serif;font-size:13px;font-weight:700;color:#0B3954;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">Dit kun je nu doen</div>
+              <div style="display:flex;flex-direction:column;gap:10px;">`;
+
+          if (isLaagInkomen || isOrienteren || isLangeTermijn) {
+            acties += `
+                <a href="https://ikbenfrits.nl/maximale-hypotheek-berekenen" style="display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #ECECEC;border-radius:14px;padding:14px 18px;text-decoration:none;transition:border-color 0.15s;">
+                  <div style="width:36px;height:36px;border-radius:10px;background:#CCFFD5;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                  </div>
+                  <div>
+                    <div style="font-family:'Roboto',sans-serif;font-size:14px;font-weight:600;color:#0B3954;">Bereken je maximale hypotheek</div>
+                    <div style="font-family:'Roboto',sans-serif;font-size:12px;color:#979797;">Gratis rekentool ,  in twee minuten duidelijkheid</div>
+                  </div>
+                </a>`;
+          }
+
+          acties += `
+                <a href="tel:0202358530" style="display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #ECECEC;border-radius:14px;padding:14px 18px;text-decoration:none;">
+                  <div style="width:36px;height:36px;border-radius:10px;background:#DBF2FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B3954" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                  </div>
+                  <div>
+                    <div style="font-family:'Roboto',sans-serif;font-size:14px;font-weight:600;color:#0B3954;">Bel ons als je een huis op het oog hebt</div>
+                    <div style="font-family:'Roboto',sans-serif;font-size:12px;color:#979797;">020 235 85 30, ma t/m vr 09:00-18:00</div>
+                  </div>
+                </a>
+                <button onclick="closeFunnel()" style="background:transparent;border:1.5px solid #ECECEC;border-radius:14px;padding:14px 18px;font-family:'Roboto',sans-serif;font-size:14px;color:#666;cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;">
+                  <div style="width:36px;height:36px;border-radius:10px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#979797" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                  </div>
+                  <span>Terug naar de pagina</span>
+                </button>
+              </div>
+            </div>`;
+        }
+
+        nietBlok.innerHTML = acties;
+        nietBlok.classList.remove('q-hidden');
+        checkNav.classList.add('q-hidden');
+      }
+
+      qShowOnly('qsCheck');
+      qSetProgress('Jouw situatie', 95);
+    }
+
+    function qIsKlaarVoorGesprek() {
+      return qData.s_situatie !== 'orienteren'
+        && qData.s_inkband !== 'onder40'
+        && qData.s_urgentie !== 'langer';
+    }
+
+    // ── Toon kalender ─────────────────────────────────────────
+    function qShowCalendar() {
+      let slug = HUBSPOT_SLUGS.default;
+      if (qData.s_situatie === 'bod' || qData.s_urgentie === 'direct') {
+        slug = HUBSPOT_SLUGS.fast_track;
+      } else if (qData.s_inkomen === 'zzp' || qData.s_inkomen === 'gemengd') {
+        slug = HUBSPOT_SLUGS.zzp;
+      } else if (qData.s_situatie === 'oversluiten' || qData.s_woning === 'oversluiten') {
+        slug = HUBSPOT_SLUGS.oversluiten;
+      }
+
+      document.getElementById('qHubspotContainer').innerHTML = `
+        <iframe
+          src="https://meetings.hubspot.com/${slug}"
+          class="q-hubspot-iframe"
+          allow="camera; microphone"
+          title="Afspraak inplannen met Frits"
+        ></iframe>`;
+
+      qShowOnly('qsCalendar');
+      qSetProgress('Afspraak inplannen', 100);
+    }
+
+    // ── Koppel ALLE CTA-knoppen op de landingspagina ──────────
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('a[href="#afspraak"], .sticky-cta a, .sticky-cta button').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+          e.preventDefault();
+          openFunnel();
+        });
+      });
+      // Koppel ook de newsletter-knop
+      const nlBtn = document.querySelector('.btn-nl');
+      if (nlBtn) {
+        nlBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          openFunnel();
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
