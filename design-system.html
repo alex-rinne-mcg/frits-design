@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frits Design System</title>
+  <style>
+    /*
+     * FONT NOTE: Buenos Aires (headings/UI labels) and Aeonik (body/buttons) are
+     * proprietary brand fonts and cannot be loaded from Google Fonts. Roboto is
+     * used here as a preview fallback only. In production, load the brand fonts
+     * via @font-face with your licensed font files.
+     */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;600;700&display=swap');
+
+    :root {
+      /* ─── BRAND COLORS ─────────────────────────────────────── */
+      --color-navy:          #0B3954;   /* Primary brand dark — hero, footer, dark sections */
+      --color-azure:         #4AADFF;   /* Brand blue — accents, decorative shapes */
+      --color-green:         #4BFF7D;   /* Primary CTA green — buttons, calendar highlight */
+      --color-coral:         #FF6B35;   /* Newsletter section background */
+
+      /* ─── TINTS / SECTION BACKGROUNDS ──────────────────────── */
+      --color-sky-light:     #DBF2FF;   /* Feature sections, hero background */
+      --color-green-light:   #CCFFD5;   /* Booking step backgrounds */
+      --color-cream:         #F3F3E9;   /* Warm alternate sections */
+
+      /* ─── AZURE SCALE ───────────────────────────────────────── */
+      --color-azure-25:      #02427D;
+      --color-azure-30:      #1B567F;
+      --color-azure-37:      #0072BC;
+      --color-azure-48:      #2281D4;
+      --color-azure-50:      #0075FF;
+      --color-azure-61:      #4285F4;
+      --color-azure-86:      #B7E4FF;
+
+      /* ─── GREEN SCALE ───────────────────────────────────────── */
+      --color-green-42:      #00D759;
+      --color-green-43:      #34A853;
+      --color-chartreuse:    #7FC042;
+
+      /* ─── SIGNAL COLORS ─────────────────────────────────────── */
+      --color-red-54:        #D7403A;
+      --color-red-56:        #E94235;
+      --color-red-62:        #FF603E;   /* Error / radio accent */
+
+      --color-orange-48:     #F4B000;
+      --color-orange-50:     #FABB05;
+      --color-orange-54:     #FFB814;   /* Star ratings */
+      --color-orange-89:     #FFD8C5;   /* Peach button / soft accent */
+
+      --color-yellow-50:     #E9E015;
+      --color-yellow-52:     #FFC808;   /* Kiyoh badge ring */
+
+      /* ─── NEUTRALS ──────────────────────────────────────────── */
+      --color-white:         #FFFFFF;
+      --color-white-80:      rgba(255, 255, 255, 0.80);
+      --color-white-50:      rgba(255, 255, 255, 0.50);
+      --color-white-0:       rgba(255, 255, 255, 0);
+      --color-black:         #000000;
+      --color-black-75:      rgba(0, 0, 0, 0.75);
+      --color-black-70:      rgba(0, 0, 0, 0.70);
+      --color-black-65:      rgba(0, 0, 0, 0.65);
+
+      --color-grey-25:       #3C4043;
+      --color-grey-27:       #464646;
+      --color-grey-34:       #565656;
+      --color-grey-40:       #666666;
+      --color-grey-46:       #767676;
+      --color-grey-59:       #979797;
+      --color-grey-73:       #B9B9B9;
+      --color-grey-82:       #D1D1D1;
+      --color-grey-85:       #D9D9D9;
+      --color-grey-93:       #ECECEC;
+      --color-grey-98:       #F7FCFF;
+      --color-off-white:     #F5F5F5;
+      --color-mid-grey:      #DDDDDD;
+
+      /* ─── TYPOGRAPHY ────────────────────────────────────────── */
+      --font-heading:        'Buenos Aires', serif;
+      --font-body:           'Aeonik', sans-serif;
+      --font-fallback:       'Roboto', sans-serif;
+
+      --fw-light:    350;
+      --fw-regular:  400;
+      --fw-semibold: 600;
+      --fw-bold:     700;
+
+      /* Type scale */
+      --text-xs:    12px;
+      --text-sm:    14px;
+      --text-base:  16px;
+      --text-md:    18px;
+      --text-lg:    20px;
+      --text-xl:    24px;
+      --text-2xl:   30px;
+      --text-3xl:   36px;
+
+      /* Line heights */
+      --lh-tight:   1.2;
+      --lh-snug:    1.3;
+      --lh-normal:  1.5;
+      --lh-relaxed: 1.6;
+
+      /* Letter spacing */
+      --ls-tight:  -0.01em;
+      --ls-normal:  0em;
+      --ls-wide:    0.02em;
+
+      /* ─── SPACING ────────────────────────────────────────────── */
+      --space-1:   4px;
+      --space-2:   8px;
+      --space-3:   12px;
+      --space-4:   16px;
+      --space-5:   20px;
+      --space-6:   24px;
+      --space-7:   32px;
+      --space-8:   40px;
+      --space-9:   48px;
+      --space-10:  64px;
+      --space-11:  80px;
+      --space-12:  96px;
+      --space-13:  112px;
+
+      /* ─── BORDER RADIUS ──────────────────────────────────────── */
+      --radius-sm:   5px;
+      --radius-md:   20px;
+      --radius-lg:   30px;
+      --radius-xl:   50px;
+      --radius-full: 9999px;
+
+      /* ─── SHADOWS ────────────────────────────────────────────── */
+      --shadow-xs:    0px 1px 2px rgba(16, 24, 40, 0.05);
+      --shadow-sm:    0px 1px 4px rgba(0, 0, 0, 0.30);
+      --shadow-md:    0px 2px 0px rgba(0, 0, 0, 0.02);
+      --shadow-inset: 0px -1px 1px -0.01px rgba(0, 0, 0, 0.15) inset;
+
+      /* ─── LAYOUT ─────────────────────────────────────────────── */
+      --container-max:  1440px;
+      --content-max:    1216px;
+      --section-px:     112px;
+      --section-py-sm:  60px;
+      --section-py-md:  80px;
+      --section-py-lg:  100px;
+    }
+
+    /* ─── BASE RESET ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body), var(--font-fallback), sans-serif; background: #f5f5f5; color: var(--color-grey-27); }
+
+    /* ─── DS SHELL ───────────────────────────────────────────── */
+    .ds-page { max-width: 1200px; margin: 0 auto; padding: 40px 32px 100px; }
+    .ds-header { border-bottom: 3px solid var(--color-green); padding-bottom: 32px; margin-bottom: 64px; }
+    .ds-logo { font-family: var(--font-heading), var(--font-fallback); font-size: 28px; font-weight: 700; color: var(--color-navy); display: flex; align-items: center; gap: 2px; }
+    .ds-logo-accent { color: var(--color-green); }
+    .ds-subtitle { font-size: 13px; color: var(--color-grey-59); margin-top: 6px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .ds-version { display: inline-block; margin-top: 8px; font-size: 11px; background: var(--color-green-light); color: var(--color-green-43); padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+
+    .ds-toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .ds-toc a { font-size: 12px; color: var(--color-azure-50); text-decoration: none; padding: 4px 12px; border-radius: var(--radius-full); border: 1px solid var(--color-azure-86); transition: background 0.12s; }
+    .ds-toc a:hover { background: var(--color-azure-86); }
+
+    .ds-section { margin-bottom: 80px; }
+    .ds-section-title { font-family: var(--font-body), var(--font-fallback); font-weight: 600; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-grey-59); margin-bottom: 4px; }
+    .ds-section-heading { font-family: var(--font-heading), var(--font-fallback); font-weight: 600; font-size: 22px; color: var(--color-navy); margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid var(--color-grey-93); }
+
+    .ds-row { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 24px; align-items: flex-start; }
+    .ds-col { flex: 1; min-width: 160px; }
+    .ds-label { font-size: 11px; color: var(--color-grey-59); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+    .ds-note { font-size: 12px; color: var(--color-grey-46); margin-top: 8px; font-style: italic; }
+
+    /* ─── SWATCHES ───────────────────────────────────────────── */
+    .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+    .swatch { border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .swatch-color { height: 60px; }
+    .swatch-info { background: white; padding: 8px 10px; }
+    .swatch-name { font-size: 11px; font-weight: 600; color: var(--color-grey-27); }
+    .swatch-hex  { font-family: monospace; font-size: 10px; color: var(--color-grey-59); }
+    .swatch-use  { font-size: 9px; color: var(--color-grey-73); margin-top: 2px; }
+
+    .color-group { margin-bottom: 28px; }
+    .color-group-title { font-size: 11px; font-weight: 700; color: var(--color-grey-40); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+
+    /* ─── TYPE SPECIMENS ─────────────────────────────────────── */
+    .type-specimen { padding: 18px 22px; background: white; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--color-grey-93); }
+    .type-meta { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+    .type-tag { font-family: monospace; font-size: 10px; background: var(--color-sky-light); color: var(--color-azure-30); padding: 2px 6px; border-radius: 3px; }
+
+    /* ─── SPACING ────────────────────────────────────────────── */
+    .space-row { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+    .space-bar  { background: var(--color-azure-86); border-radius: 2px; height: 18px; flex-shrink: 0; }
+    .space-lbl  { font-size: 12px; color: var(--color-grey-40); min-width: 70px; font-family: monospace; }
+    .space-val  { font-family: monospace; font-size: 11px; color: var(--color-grey-59); }
+
+    /* ─── RADIUS ─────────────────────────────────────────────── */
+    .radius-row  { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end; }
+    .radius-box  { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .radius-shape { width: 60px; height: 60px; background: var(--color-navy); }
+    .radius-lbl  { font-size: 11px; color: var(--color-grey-40); text-align: center; font-weight: 600; }
+    .radius-val  { font-family: monospace; font-size: 10px; color: var(--color-grey-59); text-align: center; }
+
+    /* ─── BUTTONS ────────────────────────────────────────────── */
+    .btn { display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border: none; font-family: var(--font-body), var(--font-fallback); transition: opacity 0.15s; text-decoration: none; white-space: nowrap; }
+    .btn:hover { opacity: 0.85; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 6px; }
+
+    /* Primary: filled green pill — main CTA */
+    .btn-primary {
+      background: var(--color-green);
+      color: var(--color-black);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 27px;
+      letter-spacing: 0.02em;
+      padding: 12px 24px;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xs);
+      outline: 1px solid var(--color-green);
+      outline-offset: -1px;
+    }
+    /* Secondary: outlined black pill — nav/topic chips */
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-black);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 27px;
+      letter-spacing: 0.02em;
+      padding: 12px 24px;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xs);
+      outline: 1px solid var(--color-black);
+      outline-offset: -1px;
+    }
+    /* Topic pill: used on homepage "Waarmee mogen wij je helpen?" — same green fill as primary */
+    .btn-topic {
+      background: var(--color-green);
+      color: var(--color-black);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 27px;
+      letter-spacing: 0.02em;
+      padding: 12px 24px;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xs);
+      outline: 1px solid var(--color-green);
+      outline-offset: -1px;
+    }
+    /* Ghost: white outline pill — on dark/navy backgrounds */
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-white);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 27px;
+      padding: 12px 24px;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xs);
+      outline: 1px solid var(--color-white);
+      outline-offset: -1px;
+    }
+    /* Peach: soft orange pill — secondary accent */
+    .btn-peach {
+      background: var(--color-orange-89);
+      color: var(--color-black);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 27px;
+      padding: 12px 24px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xs);
+      outline: 1px solid var(--color-orange-89);
+      outline-offset: -1px;
+    }
+    /* Booking next step — round, smaller, heading font */
+    .btn-booking {
+      background: var(--color-green);
+      color: var(--color-black);
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      padding: 10px 24px;
+      border-radius: var(--radius-full);
+      box-shadow: var(--shadow-md);
+      font-family: var(--font-heading), var(--font-fallback);
+    }
+    /* Booking back — muted outline */
+    .btn-booking-back {
+      background: transparent;
+      color: var(--color-grey-27);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      padding: 10px 24px;
+      border-radius: var(--radius-full);
+      outline: 1px solid var(--color-grey-82);
+      outline-offset: -1px;
+    }
+    /* Disabled / loading state */
+    .btn-disabled {
+      background: var(--color-grey-85);
+      color: var(--color-grey-59);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 27px;
+      padding: 12px 24px;
+      border-radius: var(--radius-xl);
+      cursor: not-allowed;
+      opacity: 1;
+    }
+    /* Newsletter submit — coral bg */
+    .btn-newsletter {
+      background: var(--color-navy);
+      color: var(--color-white);
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 24px;
+      padding: 10px 20px;
+      border-radius: var(--radius-xl);
+    }
+
+    /* ─── NAVBAR ─────────────────────────────────────────────── */
+    .navbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; background: white; border-bottom: 1px solid var(--color-grey-93); }
+    .navbar-logo { display: flex; align-items: center; gap: 6px; font-size: 18px; font-weight: 700; color: var(--color-navy); font-family: var(--font-heading), var(--font-fallback); }
+    .navbar-logo svg { width: 20px; height: 20px; }
+    .navbar-links { display: flex; gap: 28px; list-style: none; }
+    .navbar-links a { font-size: 15px; color: var(--color-grey-27); text-decoration: none; font-family: var(--font-body), var(--font-fallback); }
+    .navbar-links a:hover { color: var(--color-navy); }
+    .navbar-actions { display: flex; align-items: center; gap: 12px; }
+    .navbar-hamburger { width: 36px; height: 36px; border-radius: 50%; background: var(--color-green); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; cursor: pointer; border: none; }
+    .navbar-hamburger span { display: block; width: 14px; height: 2px; background: var(--color-black); border-radius: 1px; }
+    .navbar-emoji { width: 36px; height: 36px; border-radius: 50%; background: var(--color-yellow-52); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+
+    /* ─── FORM ELEMENTS ──────────────────────────────────────── */
+    .input-wrap { position: relative; display: flex; align-items: center; }
+    .input-base {
+      font-family: var(--font-heading), var(--font-fallback);
+      font-size: 16px;
+      font-weight: 350;                    /* Buenos Aires light */
+      line-height: 25px;
+      color: var(--color-grey-27);
+      background: var(--color-white);
+      border: 1.5px solid var(--color-grey-82);
+      border-radius: var(--radius-full);   /* pill shape — 9999px */
+      padding: 12px 18px 12px 44px;        /* left pad for icon */
+      width: 100%;
+      box-shadow: none;                    /* no shadow in actual design */
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+    .input-base:focus { border-color: var(--color-azure-50); }
+    .input-base.no-icon { padding-left: 18px; }  /* password show/hide only on right */
+    .input-error { border-color: var(--color-red-62) !important; }
+
+    /* Icon inside input — left-aligned, blue */
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      color: var(--color-azure-50);
+      font-size: 16px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    /* Icon on right (e.g. password toggle) */
+    .input-icon-right {
+      position: absolute;
+      right: 16px;
+      color: var(--color-grey-59);
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    /* Label — Buenos Aires 350, 16px/25px — matches actual design */
+    .input-label { font-family: var(--font-heading), var(--font-fallback); font-size: 16px; font-weight: 350; line-height: 25px; color: var(--color-grey-27); margin-bottom: 6px; display: block; }
+    .input-required { color: var(--color-red-62); margin-left: 2px; }
+    /* Hint/helper — Buenos Aires 350, 14px (not Aeonik — confirmed from source) */
+    .input-hint   { font-family: var(--font-heading), var(--font-fallback); font-size: 14px; font-weight: 350; line-height: 19.6px; color: var(--color-grey-59); margin-top: 5px; }
+    .input-error-msg { font-family: var(--font-heading), var(--font-fallback); font-size: 14px; font-weight: 350; color: var(--color-red-62); margin-top: 5px; display: flex; align-items: center; gap: 5px; }
+
+    /* Form section heading — coral circle avatar + navy bold label */
+    .form-section-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .form-section-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--color-coral); display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; flex-shrink: 0; }
+    /* Section title — Buenos Aires 600, 16px/27.2px, Azure-25 colour (from source) */
+    .form-section-title { font-family: var(--font-heading), var(--font-fallback); font-size: 16px; font-weight: 600; line-height: 27.2px; color: var(--color-azure-25); }
+
+    .form-group { margin-bottom: 16px; }
+    .form-section { background: white; padding: 28px; border-radius: 8px; border: 1px solid var(--color-grey-93); max-width: 480px; }
+
+    /* Radio buttons — orange/red accent dot as seen in booking tool */
+    .radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
+    .radio-item { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .radio-ring { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--color-grey-82); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: border-color 0.15s; }
+    .radio-ring-selected { border-color: var(--color-red-62); }
+    .radio-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-red-62); }
+    /* Radio label — Buenos Aires 350, 16px/25px */
+    .radio-label { font-family: var(--font-heading), var(--font-fallback); font-size: 16px; font-weight: 350; line-height: 25px; color: var(--color-grey-27); }
+
+    /* Checkboxes — no border separator between items (as per actual design) */
+    .check-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; }
+    .check-box { width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid var(--color-grey-82); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+    .check-box-checked { background: var(--color-navy); border-color: var(--color-navy); color: white; font-size: 10px; }
+    /* Checkbox label — Buenos Aires 350, 14px/18.2px — matches actual design */
+    .check-label { font-family: var(--font-heading), var(--font-fallback); font-size: 14px; font-weight: 350; line-height: 18.2px; color: var(--color-grey-27); }
+
+    /* Calendar selected state */
+    .cal-demo { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .cal-day { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 13px; border-radius: 50%; font-family: var(--font-heading), var(--font-fallback); cursor: pointer; color: var(--color-grey-27); }
+    .cal-day:hover { background: var(--color-grey-93); }
+    .cal-day-selected { background: var(--color-green); color: var(--color-black); font-weight: 600; }
+    .cal-day-today { outline: 1.5px solid var(--color-navy); }
+    .cal-day-disabled { color: var(--color-grey-73); cursor: default; }
+
+    /* ─── TOPIC CHIP SECTION ─────────────────────────────────── */
+    .chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; padding: 10px 20px; border-radius: var(--radius-xl); font-size: 16px; font-weight: 400; cursor: pointer; border: none; font-family: var(--font-body), var(--font-fallback); transition: opacity 0.12s; }
+    .chip-green  { background: var(--color-green); color: var(--color-black); outline: 1px solid var(--color-green); outline-offset:-1px; }
+    .chip-outline { background: transparent; color: var(--color-black); outline: 1px solid var(--color-black); outline-offset:-1px; }
+
+    /* ─── BADGES ─────────────────────────────────────────────── */
+    .badge { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600; font-family: var(--font-heading), var(--font-fallback); }
+    .badge-green  { background: var(--color-green-light); color: var(--color-green-43); }
+    .badge-blue   { background: var(--color-azure-86);   color: var(--color-azure-30); }
+    .badge-orange { background: var(--color-orange-89);  color: var(--color-orange-48); }
+    .badge-red    { background: #FFE5E0;                 color: var(--color-red-54); }
+    .badge-grey   { background: var(--color-grey-93);    color: var(--color-grey-40); }
+
+    /* ─── CARDS ──────────────────────────────────────────────── */
+    .card { background: white; border-radius: var(--radius-md); overflow: hidden; }
+    .card-default  { box-shadow: var(--shadow-xs); border: 1px solid var(--color-grey-93); }
+    .card-elevated { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .card-body  { padding: 24px; }
+    .card-title { font-family: var(--font-heading), var(--font-fallback); font-size: 18px; font-weight: 600; color: var(--color-navy); line-height: 1.35; margin-bottom: 8px; }
+    .card-text  { font-family: var(--font-body), var(--font-fallback); font-size: 16px; line-height: 1.5; color: var(--color-grey-27); }
+    .card-row   { display: flex; gap: 16px; flex-wrap: wrap; }
+    .card-row .card { flex: 1; min-width: 200px; }
+
+    /* Info card — blue rounded, used in booking tool intro */
+    .info-card { background: var(--color-azure-50); border-radius: var(--radius-md); padding: 24px 28px; color: white; }
+    .info-card-title { font-size: 18px; font-weight: 600; margin-bottom: 12px; line-height: 1.35; font-family: var(--font-heading), var(--font-fallback); }
+    .info-card-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .info-card-list li { font-size: 14px; line-height: 1.5; display: flex; align-items: flex-start; gap: 8px; font-family: var(--font-body), var(--font-fallback); }
+    .info-card-list li::before { content: ""; display: none; }
+    .info-card-list li { padding-left: 22px; position: relative; }
+    .info-card-list li::after { content: ""; position: absolute; left: 0; top: 5px; width: 12px; height: 12px; background: var(--color-green); border-radius: 50%; }
+
+    /* ─── SECTION BACKGROUNDS ────────────────────────────────── */
+    .section-white  { background: var(--color-white); }
+    .section-sky    { background: var(--color-sky-light); }
+    .section-navy   { background: var(--color-navy); }
+    .section-cream  { background: var(--color-cream); }
+    .section-green  { background: var(--color-green-light); }
+    .section-coral  { background: var(--color-coral); }
+
+    .bg-demo { height: 72px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+    .bg-outline { outline: 1px solid var(--color-grey-93); }
+
+    /* ─── STEP INDICATOR ─────────────────────────────────────── */
+    .steps { display: flex; align-items: flex-start; }
+    .step-wrapper { display: flex; flex-direction: column; align-items: center; }
+    .step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; font-family: var(--font-heading), var(--font-fallback); }
+    .step-dot-active   { background: var(--color-navy); color: white; }
+    .step-dot-done     { background: var(--color-green); color: var(--color-black); }
+    .step-dot-inactive { background: var(--color-grey-85); color: var(--color-grey-59); }
+    .step-line { width: 48px; height: 2px; background: var(--color-grey-85); margin-top: 13px; flex-shrink: 0; }
+    .step-line-done { background: var(--color-green); }
+    .step-label { font-size: 10px; color: var(--color-grey-59); text-align: center; margin-top: 6px; font-family: var(--font-heading), var(--font-fallback); }
+    .step-label-active { color: var(--color-navy); font-weight: 600; }
+
+    /* ─── FAQ ACCORDION ──────────────────────────────────────── */
+    .faq-list { border: 1px solid var(--color-grey-93); border-radius: var(--radius-md); overflow: hidden; background: white; }
+    .faq-item { border-bottom: 1px solid var(--color-grey-93); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 400; color: var(--color-grey-27); font-family: var(--font-heading), var(--font-fallback); gap: 12px; }
+    .faq-q:hover { background: var(--color-off-white); }
+    .faq-icon { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--color-grey-82); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--color-grey-40); flex-shrink: 0; }
+    .faq-icon-open { background: var(--color-navy); border-color: var(--color-navy); color: white; }
+    .faq-a { padding: 0 20px 16px; font-size: 14px; line-height: 1.6; color: var(--color-grey-40); font-family: var(--font-body), var(--font-fallback); }
+
+    /* ─── KIYOH BADGE ────────────────────────────────────────── */
+    /* Ring gebruikt SVG gradient (geel→oranje→rood), geen border CSS */
+    .kiyoh-badge { display: inline-flex; align-items: center; gap: 16px; }
+    .kiyoh-ring { position: relative; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .kiyoh-ring svg { display: block; }
+    .kiyoh-score { position: absolute; font-family: var(--font-body), var(--font-fallback); font-weight: 700; color: #000; line-height: 1; }
+    .kiyoh-info { display: flex; flex-direction: column; gap: 4px; }
+    .kiyoh-name  { font-size: 15px; font-weight: 600; color: var(--color-navy); font-family: var(--font-heading), var(--font-fallback); }
+    .kiyoh-count { font-size: 13px; color: var(--color-azure-50); font-family: var(--font-body), var(--font-fallback); }
+    .kiyoh-link  { font-size: 12px; color: var(--color-azure-50); text-decoration: underline; cursor: pointer; font-family: var(--font-body), var(--font-fallback); }
+    .kiyoh-stars { display: flex; gap: 2px; margin: 2px 0; }
+
+    /* ─── REVIEW CARD ────────────────────────────────────────── */
+    .review-card { background: white; border-radius: var(--radius-md); padding: 20px; border: 1px solid var(--color-grey-93); flex: 1; min-width: 200px; }
+    .review-stars { color: var(--color-orange-54); font-size: 14px; margin-bottom: 8px; }
+    .review-title { font-size: 15px; font-weight: 600; color: var(--color-navy); margin-bottom: 6px; font-family: var(--font-heading), var(--font-fallback); }
+    .review-text  { font-size: 13px; line-height: 1.55; color: var(--color-grey-40); font-family: var(--font-body), var(--font-fallback); }
+    .review-author { font-size: 12px; color: var(--color-grey-59); margin-top: 10px; }
+
+    /* ─── PLAY BUTTON ────────────────────────────────────────── */
+    .play-btn { width: 56px; height: 56px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.2); cursor: pointer; border: none; }
+    .play-btn::after { content: ""; border-style: solid; border-width: 9px 0 9px 18px; border-color: transparent transparent transparent var(--color-navy); margin-left: 4px; }
+
+    /* ─── NEWSLETTER SECTION ─────────────────────────────────── */
+    .newsletter-section { background: var(--color-coral); border-radius: 12px; padding: 40px 48px; display: flex; flex-direction: column; gap: 16px; }
+    .newsletter-title { font-size: 24px; font-weight: 700; color: white; font-family: var(--font-heading), var(--font-fallback); }
+    .newsletter-subtitle { font-size: 15px; color: rgba(255,255,255,0.85); font-family: var(--font-body), var(--font-fallback); }
+    .newsletter-form { display: flex; gap: 8px; max-width: 480px; }
+    .newsletter-input { flex: 1; padding: 10px 16px; border-radius: var(--radius-xl); border: none; font-size: 15px; font-family: var(--font-body), var(--font-fallback); outline: none; }
+
+    /* ─── DECORATIVE SHAPES ──────────────────────────────────── */
+    .shapes-demo { position: relative; height: 180px; background: var(--color-sky-light); border-radius: 8px; overflow: visible; }
+    .shape-circle-fill { border-radius: 50%; background: var(--color-azure); }
+    .shape-circle-outline { border-radius: 50%; border: 4px solid var(--color-green); background: transparent; }
+    .shape-square-outline { border: 4px solid var(--color-green); background: transparent; transform: rotate(-15deg); }
+    .shape-circle-blue-fill { border-radius: 50%; background: var(--color-azure); }
+
+    /* ─── ALERTS ─────────────────────────────────────────────── */
+    .alert { display: flex; gap: 12px; padding: 14px 16px; border-radius: var(--radius-md); font-size: 14px; line-height: 1.5; margin-bottom: 10px; font-family: var(--font-body), var(--font-fallback); }
+    .alert-info    { background: var(--color-sky-light);  color: var(--color-azure-25); border: 1px solid var(--color-azure-86); }
+    .alert-success { background: var(--color-green-light); color: var(--color-green-43); border: 1px solid #A0FFBE; }
+    .alert-warning { background: #FFF3D3;                  color: var(--color-orange-48); border: 1px solid var(--color-orange-89); }
+    .alert-error   { background: #FFE5E0;                  color: var(--color-red-54);    border: 1px solid #FFBDB0; }
+    .alert-icon { font-size: 15px; flex-shrink: 0; }
+
+    /* ─── DIVIDER ────────────────────────────────────────────── */
+    .divider { border: none; border-top: 1px solid var(--color-grey-93); margin: 20px 0; }
+  </style>
+</head>
+<body>
+<div class="ds-page">
+
+  <!-- ── HEADER ────────────────────────────────────────────────── -->
+  <header class="ds-header">
+    <div class="ds-logo">Frits<span class="ds-logo-accent">.</span></div>
+    <div class="ds-subtitle">Design System</div>
+    <span class="ds-version">v1.4 — exacte header/footer ikbenfrits.nl, geen emoji's, correcte logo SVG's</span>
+    <nav class="ds-toc">
+      <a href="#colors">Colors</a>
+      <a href="#typography">Typography</a>
+      <a href="#spacing">Spacing</a>
+      <a href="#radius">Radius</a>
+      <a href="#shadows">Shadows</a>
+      <a href="#navbar">Navbar</a>
+      <a href="#buttons">Buttons</a>
+      <a href="#forms">Forms</a>
+      <a href="#calendar">Calendar</a>
+      <a href="#chips">Topic Chips</a>
+      <a href="#badges">Badges</a>
+      <a href="#cards">Cards</a>
+      <a href="#infocards">Info Card</a>
+      <a href="#backgrounds">Backgrounds</a>
+      <a href="#decorative">Decorative</a>
+      <a href="#steps">Steps</a>
+      <a href="#faq">FAQ</a>
+      <a href="#kiyoh">Kiyoh / Reviews</a>
+      <a href="#newsletter">Newsletter</a>
+      <a href="#alerts">Alerts</a>
+      <a href="#tokens">Tokens</a>
+    </nav>
+  </header>
+
+
+  <!-- ── 1. COLORS ─────────────────────────────────────────────── -->
+  <section id="colors" class="ds-section">
+    <div class="ds-section-title">Foundation</div>
+    <div class="ds-section-heading">Color</div>
+
+    <div class="color-group">
+      <div class="color-group-title">Brand Core</div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-color" style="background:#0B3954"></div><div class="swatch-info"><div class="swatch-name">Navy</div><div class="swatch-hex">#0B3954</div><div class="swatch-use">Hero, footer, dark sections</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#4AADFF"></div><div class="swatch-info"><div class="swatch-name">Azure</div><div class="swatch-hex">#4AADFF</div><div class="swatch-use">Accent, decorative shapes</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#4BFF7D"></div><div class="swatch-info"><div class="swatch-name">Green</div><div class="swatch-hex">#4BFF7D</div><div class="swatch-use">Primary CTA, calendar highlight</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#FF6B35"></div><div class="swatch-info"><div class="swatch-name">Coral</div><div class="swatch-hex">#FF6B35</div><div class="swatch-use">Newsletter section bg</div></div></div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-title">Section Tints</div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-color" style="background:#DBF2FF"></div><div class="swatch-info"><div class="swatch-name">Sky Light</div><div class="swatch-hex">#DBF2FF</div><div class="swatch-use">Hero bg, feature sections</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#CCFFD5"></div><div class="swatch-info"><div class="swatch-name">Green Light</div><div class="swatch-hex">#CCFFD5</div><div class="swatch-use">Booking step background</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#F3F3E9"></div><div class="swatch-info"><div class="swatch-name">Cream</div><div class="swatch-hex">#F3F3E9</div><div class="swatch-use">Warm alt sections</div></div></div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-title">Azure Scale</div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-color" style="background:#02427D"></div><div class="swatch-info"><div class="swatch-name">Azure-25</div><div class="swatch-hex">#02427D</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#1B567F"></div><div class="swatch-info"><div class="swatch-name">Azure-30</div><div class="swatch-hex">#1B567F</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#0072BC"></div><div class="swatch-info"><div class="swatch-name">Azure-37</div><div class="swatch-hex">#0072BC</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#2281D4"></div><div class="swatch-info"><div class="swatch-name">Azure-48</div><div class="swatch-hex">#2281D4</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#0075FF"></div><div class="swatch-info"><div class="swatch-name">Azure-50</div><div class="swatch-hex">#0075FF</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#B7E4FF"></div><div class="swatch-info"><div class="swatch-name">Azure-86</div><div class="swatch-hex">#B7E4FF</div></div></div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-title">Signal / Status</div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-color" style="background:#FF603E"></div><div class="swatch-info"><div class="swatch-name">Red-62</div><div class="swatch-hex">#FF603E</div><div class="swatch-use">Error, radio accent</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#E94235"></div><div class="swatch-info"><div class="swatch-name">Red-56</div><div class="swatch-hex">#E94235</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#FFB814"></div><div class="swatch-info"><div class="swatch-name">Orange-54</div><div class="swatch-hex">#FFB814</div><div class="swatch-use">Star ratings</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#FFC808"></div><div class="swatch-info"><div class="swatch-name">Yellow-52</div><div class="swatch-hex">#FFC808</div><div class="swatch-use">Kiyoh badge ring</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#FFD8C5"></div><div class="swatch-info"><div class="swatch-name">Orange-89</div><div class="swatch-hex">#FFD8C5</div><div class="swatch-use">Peach btn accent</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#34A853"></div><div class="swatch-info"><div class="swatch-name">Green-43</div><div class="swatch-hex">#34A853</div><div class="swatch-use">Success text</div></div></div>
+      </div>
+    </div>
+
+    <div class="color-group">
+      <div class="color-group-title">Neutrals</div>
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-color" style="background:#464646"></div><div class="swatch-info"><div class="swatch-name">Grey-27</div><div class="swatch-hex">#464646</div><div class="swatch-use">Body text</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#979797"></div><div class="swatch-info"><div class="swatch-name">Grey-59</div><div class="swatch-hex">#979797</div><div class="swatch-use">Placeholder, captions</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#B9B9B9"></div><div class="swatch-info"><div class="swatch-name">Grey-73</div><div class="swatch-hex">#B9B9B9</div><div class="swatch-use">Disabled text</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#D1D1D1"></div><div class="swatch-info"><div class="swatch-name">Grey-82</div><div class="swatch-hex">#D1D1D1</div><div class="swatch-use">Borders, dividers</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#D9D9D9"></div><div class="swatch-info"><div class="swatch-name">Grey-85</div><div class="swatch-hex">#D9D9D9</div><div class="swatch-use">Disabled bg, step line</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#ECECEC"></div><div class="swatch-info"><div class="swatch-name">Grey-93</div><div class="swatch-hex">#ECECEC</div><div class="swatch-use">Card borders, separators</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#F5F5F5"></div><div class="swatch-info"><div class="swatch-name">Off-white</div><div class="swatch-hex">#F5F5F5</div><div class="swatch-use">Hover bg, page bg</div></div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 2. TYPOGRAPHY ──────────────────────────────────────────── -->
+  <section id="typography" class="ds-section">
+    <div class="ds-section-title">Foundation</div>
+    <div class="ds-section-heading">Typography</div>
+
+    <div class="ds-row" style="margin-bottom:28px;">
+      <div class="ds-col">
+        <div class="ds-label">Heading Font — Buenos Aires</div>
+        <div style="font-family:var(--font-heading),var(--font-fallback);font-size:30px;font-weight:350;color:var(--color-navy);line-height:1.2;">Buenos Aires</div>
+        <div style="font-family:monospace;font-size:11px;color:var(--color-grey-59);margin-top:4px;">weights: 350 (light) · 600 (semibold)</div>
+        <div style="font-family:monospace;font-size:11px;color:var(--color-grey-59);">use: headings, form labels, UI labels, step labels, FAQ questions, card titles, badges, calendar</div>
+      </div>
+      <div class="ds-col">
+        <div class="ds-label">Body Font — Aeonik</div>
+        <div style="font-family:var(--font-body),var(--font-fallback);font-size:30px;font-weight:400;color:var(--color-grey-27);line-height:1.2;">Aeonik</div>
+        <div style="font-family:monospace;font-size:11px;color:var(--color-grey-59);margin-top:4px;">weights: 400 (regular) · 700 (bold)</div>
+        <div style="font-family:monospace;font-size:11px;color:var(--color-grey-59);">use: body copy, buttons (primary/secondary/ghost/peach), nav links, hints, alerts, FAQ answers, review body, newsletter copy · letter-spacing: 0.02em</div>
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:var(--font-body),var(--font-fallback);font-size:36px;font-weight:700;color:var(--color-navy);line-height:54px;">Persoonlijk hypotheekadvies</div>
+      <div class="type-meta"><span class="type-tag">Display</span><span class="type-tag">Aeonik 700</span><span class="type-tag">36px / 54px</span><span class="type-tag">Navy</span></div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:var(--font-heading),var(--font-fallback);font-size:35.6px;font-weight:350;color:var(--color-black);line-height:46.8px;">Waarmee mogen wij je helpen?</div>
+      <div class="type-meta"><span class="type-tag">H1</span><span class="type-tag">Buenos Aires 350</span><span class="type-tag">36px / 46.8px</span><span class="type-tag">Black</span></div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:var(--font-heading),var(--font-fallback);font-size:24px;font-weight:600;color:var(--color-navy);line-height:31.2px;">Wij hebben al meer dan 10.000 klanten bij gemaakt</div>
+      <div class="type-meta"><span class="type-tag">H2</span><span class="type-tag">Buenos Aires 600</span><span class="type-tag">24px / 31.2px</span><span class="type-tag">Navy</span></div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:var(--font-heading),var(--font-fallback);font-size:20px;font-weight:600;color:var(--color-navy);line-height:26px;">Er zit altijd een adviseur bij jou in de buurt</div>
+      <div class="type-meta"><span class="type-tag">H3</span><span class="type-tag">Buenos Aires 600</span><span class="type-tag">20px / 26px</span><span class="type-tag">Navy</span></div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:var(--font-heading),var(--font-fallback);font-size:18px;font-weight:600;color:var(--color-navy);line-height:21.6px;">Veelgestelde vragen</div>
+      <div class="type-meta"><span class="type-tag">H4</span><span class="type-tag">Buenos Aires 600</span><span class="type-tag">18px / 21.6px</span><span class="type-tag">Navy</span></div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:var(--font-body),var(--font-fallback);font-size:18px;font-weight:400;color:#464646;line-height:27px;letter-spacing:0.02em;">100% onafhankelijk advies van een gecertificeerde hypotheekadviseur. Wij vergelijken alle banken op rente en voorwaarden.</div>
+      <div class="type-meta"><span class="type-tag">Body Large</span><span class="type-tag">Aeonik 400</span><span class="type-tag">18px / 27px</span><span class="type-tag">ls 0.02em (0.36px)</span></div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:var(--font-body),var(--font-fallback);font-size:16px;font-weight:400;color:#464646;line-height:24px;">Bij Frits werken we door het hele land. Daarom zit er altijd een Frits-vestiging bij jou in de buurt. Het eerste gesprek gaat via telefoon of videobellen.</div>
+      <div class="type-meta"><span class="type-tag">Body</span><span class="type-tag">Aeonik 400</span><span class="type-tag">16px / 24px</span></div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:var(--font-heading),var(--font-fallback);font-size:14px;font-weight:350;color:#464646;line-height:22.4px;">Bekijk eens onze vestigingenpagina. Hier vind je alles wat je moet weten over het dichtstbijzijnde Frits kantoor.</div>
+      <div class="type-meta"><span class="type-tag">Body Small / UI text</span><span class="type-tag">Buenos Aires 350</span><span class="type-tag">14px / 22.4px</span></div>
+    </div>
+
+    <div class="type-specimen">
+      <div style="font-family:var(--font-heading),var(--font-fallback);font-size:12px;font-weight:350;color:#979797;line-height:16.8px;">1500 beoordelingen · 10.000+ klanten geholpen · Sinds 2015</div>
+      <div class="type-meta"><span class="type-tag">Caption</span><span class="type-tag">Buenos Aires 350</span><span class="type-tag">12px / 16.8px</span><span class="type-tag">Grey-59</span></div>
+    </div>
+  </section>
+
+
+  <!-- ── 3. SPACING ─────────────────────────────────────────────── -->
+  <section id="spacing" class="ds-section">
+    <div class="ds-section-title">Foundation</div>
+    <div class="ds-section-heading">Spacing Scale</div>
+    <div class="space-row"><div class="space-bar" style="width:4px"></div><span class="space-lbl">--space-1</span><span class="space-val">4px</span></div>
+    <div class="space-row"><div class="space-bar" style="width:8px"></div><span class="space-lbl">--space-2</span><span class="space-val">8px</span></div>
+    <div class="space-row"><div class="space-bar" style="width:12px"></div><span class="space-lbl">--space-3</span><span class="space-val">12px</span></div>
+    <div class="space-row"><div class="space-bar" style="width:16px"></div><span class="space-lbl">--space-4</span><span class="space-val">16px</span></div>
+    <div class="space-row"><div class="space-bar" style="width:20px"></div><span class="space-lbl">--space-5</span><span class="space-val">20px</span></div>
+    <div class="space-row"><div class="space-bar" style="width:24px"></div><span class="space-lbl">--space-6</span><span class="space-val">24px</span></div>
+    <div class="space-row"><div class="space-bar" style="width:32px"></div><span class="space-lbl">--space-7</span><span class="space-val">32px</span></div>
+    <div class="space-row"><div class="space-bar" style="width:40px"></div><span class="space-lbl">--space-8</span><span class="space-val">40px</span></div>
+    <div class="space-row"><div class="space-bar" style="width:48px"></div><span class="space-lbl">--space-9</span><span class="space-val">48px</span></div>
+    <div class="space-row"><div class="space-bar" style="width:64px"></div><span class="space-lbl">--space-10</span><span class="space-val">64px</span></div>
+    <div class="space-row"><div class="space-bar" style="width:80px"></div><span class="space-lbl">--space-11</span><span class="space-val">80px — section vertical padding</span></div>
+    <div class="space-row"><div class="space-bar" style="width:112px"></div><span class="space-lbl">--space-13</span><span class="space-val">112px — section horizontal padding</span></div>
+  </section>
+
+
+  <!-- ── 4. BORDER RADIUS ───────────────────────────────────────── -->
+  <section id="radius" class="ds-section">
+    <div class="ds-section-title">Foundation</div>
+    <div class="ds-section-heading">Border Radius</div>
+    <div class="radius-row">
+      <div class="radius-box"><div class="radius-shape" style="border-radius:5px"></div><div class="radius-lbl">sm · 5px</div><div class="radius-val">inputs, dropdowns</div></div>
+      <div class="radius-box"><div class="radius-shape" style="border-radius:20px"></div><div class="radius-lbl">md · 20px</div><div class="radius-val">cards, info panels</div></div>
+      <div class="radius-box"><div class="radius-shape" style="border-radius:30px"></div><div class="radius-lbl">lg · 30px</div><div class="radius-val">peach button</div></div>
+      <div class="radius-box"><div class="radius-shape" style="border-radius:50px"></div><div class="radius-lbl">xl · 50px</div><div class="radius-val">primary buttons</div></div>
+      <div class="radius-box"><div class="radius-shape" style="border-radius:9999px;width:60px;height:60px"></div><div class="radius-lbl">full</div><div class="radius-val">chips, booking btn</div></div>
+    </div>
+  </section>
+
+
+  <!-- ── 5. SHADOWS ─────────────────────────────────────────────── -->
+  <section id="shadows" class="ds-section">
+    <div class="ds-section-title">Foundation</div>
+    <div class="ds-section-heading">Elevation & Shadow</div>
+    <div class="ds-row">
+      <div><div class="ds-label">shadow-xs — buttons</div><div style="background:white;padding:18px 24px;border-radius:8px;box-shadow:0px 1px 2px rgba(16,24,40,0.05);display:inline-block;font-family:monospace;font-size:11px;color:var(--color-grey-59);">0 1 2 · rgba(16,24,40,0.05)</div></div>
+      <div><div class="ds-label">shadow-sm — inputs, dropdowns</div><div style="background:white;padding:18px 24px;border-radius:8px;box-shadow:0px 1px 4px rgba(0,0,0,0.30);display:inline-block;font-family:monospace;font-size:11px;color:var(--color-grey-59);">0 1 4 · rgba(0,0,0,0.30)</div></div>
+      <div><div class="ds-label">shadow-md — booking chips</div><div style="background:white;padding:18px 24px;border-radius:8px;box-shadow:0px 2px 0px rgba(0,0,0,0.02);display:inline-block;font-family:monospace;font-size:11px;color:var(--color-grey-59);">0 2 0 · rgba(0,0,0,0.02)</div></div>
+    </div>
+  </section>
+
+
+  <!-- ── 6. NAVBAR ──────────────────────────────────────────────── -->
+  <section id="navbar" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Navigation Bar</div>
+    <div class="ds-note" style="margin-bottom:16px;">Exacte header van ikbenfrits.nl — logo links, Kiyoh badge midden, hamburger rechts. Witte achtergrond, hoogte 62px.</div>
+
+    <!-- Exact Frits header -->
+    <div style="border:1px solid var(--color-grey-93);border-radius:8px;overflow:hidden;margin-bottom:24px;">
+      <div style="background:#fff;display:flex;align-items:center;justify-content:space-between;padding:10px 24px;height:62px;">
+
+        <!-- Logo left -->
+        <a href="#" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
+          <svg width="127" height="43" viewBox="0 0 127 42.6" xmlns="http://www.w3.org/2000/svg">
+            <style>.st0{fill:#4BFF7D;}.st1{fill:#4AADFF;}</style>
+            <path class="st0" d="M13.5,42.6c4.2,0,7.6-3.4,7.6-7.6s-3.4-7.6-7.6-7.6c-4.2,0-7.6,3.4-7.6,7.6S9.3,42.6,13.5,42.6z"/>
+            <path class="st1" d="M28.7,9.3L27.1,0L0,4.8l1.6,9.3L28.7,9.3z"/>
+            <path class="st1" d="M30.9,21.9l-1.6-9.3L2.2,17.4l1.6,9.3L30.9,21.9z"/>
+            <path d="M49.7,24.6v11.5h-5V7.8h17.8v4.8H49.7v7.2h10.9v4.8L49.7,24.6L49.7,24.6z"/>
+            <path d="M69.8,15.6v3.2c0.9-2.4,3.1-3.5,5.5-3.5c0.9,0,1.8,0.2,2.8,0.4l-0.8,4.6c-0.8-0.3-1.7-0.5-2.5-0.5c-2.9,0-4.9,1.9-4.9,5.5v10.8h-4.9V15.6H69.8z"/>
+            <path d="M82,15.6h4.9v20.5H82V15.6z"/>
+            <path d="M94.7,15.6v-5.3h4.9v5.3h6.1V20h-6.1v8.7c0,2.3,1.5,3.4,3.3,3.4c1,0,2.1-0.3,3.2-1l1.3,3.6c-1.8,1.2-3.8,1.8-5.7,1.8c-3.9,0-6.9-2.5-6.9-7V20h-4.1v-4.4H94.7z"/>
+            <path d="M118.3,19.2c-1.8,0-2.9,0.8-2.9,2.1c0,1.5,1.4,1.9,4.2,2.4c3.3,0.6,7.4,1.5,7.4,5.9c0,4.2-3.6,6.8-8.3,6.8c-3.4,0-6.9-1.4-9.2-3.9l2.7-3.4c1.7,2.1,4.7,3,6.9,3c1.8,0,3.1-0.6,3.1-1.9c0-1.4-1.3-1.8-3.8-2.3c-3.3-0.6-7.8-1.5-7.8-6.3c0-4.4,3.6-6.5,7.7-6.5c2.8,0,5.6,1,7.6,2.9l-2.5,3.2C121.9,19.8,119.9,19.2,118.3,19.2z"/>
+            <path class="st0" d="M87.9,9.4c0,1.9-1.4,3.4-3.5,3.4s-3.5-1.5-3.5-3.4c0-2,1.5-3.4,3.5-3.4C86.5,5.9,87.9,7.4,87.9,9.4z"/>
+          </svg>
+        </a>
+
+        <!-- Kiyoh badge center -->
+        <a href="#" style="position:relative;display:flex;align-items:center;justify-content:center;width:42px;height:42px;text-decoration:none;">
+          <!-- Ring: gradient yellow-to-orange like real Kiyoh badge -->
+          <svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;">
+            <defs>
+              <linearGradient id="kiyohRing" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#FFC107"/>
+                <stop offset="50%" style="stop-color:#FF9800"/>
+                <stop offset="100%" style="stop-color:#F44336"/>
+              </linearGradient>
+            </defs>
+            <circle cx="21" cy="21" r="19" fill="white" stroke="url(#kiyohRing)" stroke-width="4"/>
+          </svg>
+          <span style="position:relative;z-index:1;font-family:var(--font-body),var(--font-fallback);font-size:12px;font-weight:700;color:#000;line-height:1;">9.7</span>
+        </a>
+
+        <!-- Hamburger right — green circle -->
+        <button style="width:40px;height:40px;border-radius:50%;background:var(--color-green);border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;flex-shrink:0;">
+          <span style="display:block;width:16px;height:2px;background:#000;border-radius:1px;"></span>
+          <span style="display:block;width:16px;height:2px;background:#000;border-radius:1px;"></span>
+          <span style="display:block;width:16px;height:2px;background:#000;border-radius:1px;"></span>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="ds-note">
+      Logo: SVG van ikbenfrits.nl (127×43px) — icon links (blauw/groen), woordmerk rechts zwart.<br>
+      Kiyoh badge: cirkel 42px, witte kern, gradient ring (geel-oranje-rood), score "9.7" Aeonik 700 12px, gecentreerd in header.<br>
+      Hamburger: groen (#4BFF7D) cirkel 40px, 3 zwarte lijntjes 16×2px.
+    </div>
+  </section>
+
+
+  <!-- ── 7. BUTTONS ─────────────────────────────────────────────── -->
+  <section id="buttons" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Buttons</div>
+
+    <div class="ds-label">Primary — filled green pill (main CTA on homepage &amp; booking)</div>
+    <div class="btn-row" style="margin-bottom:20px;">
+      <button class="btn btn-primary">Gratis afspraak maken</button>
+      <button class="btn btn-primary">Maximale hypotheek berekenen</button>
+    </div>
+
+    <div class="ds-label">Secondary — outlined black pill (alternative actions)</div>
+    <div class="btn-row" style="margin-bottom:20px;">
+      <button class="btn btn-secondary">Maximale hypotheek berekenen</button>
+    </div>
+
+    <div class="ds-label">Ghost — white outline (on navy backgrounds)</div>
+    <div class="btn-row" style="margin-bottom:20px;background:var(--color-navy);padding:20px;border-radius:8px;">
+      <button class="btn btn-ghost">Maak een afspraak</button>
+      <button class="btn btn-ghost">Meer over Frits</button>
+    </div>
+
+    <div class="ds-label">Peach — soft orange pill (secondary accent actions)</div>
+    <div class="btn-row" style="margin-bottom:20px;">
+      <button class="btn btn-peach">Eerste huis kopen</button>
+    </div>
+
+    <div class="ds-label">Booking tool — next / back navigation</div>
+    <div class="btn-row" style="margin-bottom:20px;">
+      <button class="btn btn-booking">Volgende stap →</button>
+      <button class="btn btn-booking-back">← Terug</button>
+    </div>
+
+    <div class="ds-label">Disabled / loading state (form not complete)</div>
+    <div class="btn-row" style="margin-bottom:20px;">
+      <button class="btn btn-disabled">Afspraak plannen</button>
+    </div>
+
+    <div style="background:white;padding:20px;border-radius:8px;border:1px solid var(--color-grey-93);margin-top:8px;">
+      <div class="ds-label" style="margin-bottom:8px;">Button anatomy</div>
+      <div style="font-size:12px;color:var(--color-grey-40);line-height:2;font-family:monospace;">
+        Primary    · Aeonik 400 · 18px · pad 12px 24px · radius 50px · shadow-xs · outline 1px green<br>
+        Secondary  · Aeonik 400 · 18px · pad 12px 24px · radius 50px · shadow-xs · outline 1px black<br>
+        Ghost      · Aeonik 400 · 18px · pad 12px 24px · radius 50px · outline 1px white<br>
+        Peach      · Aeonik 400 · 18px · pad 12px 24px · radius 30px · bg #FFD8C5<br>
+        Booking    · Buenos Aires 600 · 16px · pad 10px 24px · radius 9999px · shadow-md
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 8. FORMS ───────────────────────────────────────────────── -->
+  <section id="forms" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Form Elements</div>
+
+    <div class="ds-row" style="gap:32px;align-items:flex-start;">
+
+      <!-- Left: booking-style form (radio + basic inputs) -->
+      <div class="form-section">
+        <div class="ds-label" style="margin-bottom:14px;">Booking form — radio, text inputs, checkboxes</div>
+
+        <!-- Radio -->
+        <div class="form-group">
+          <label class="input-label">Hoe wil je het gesprek voeren?</label>
+          <div class="radio-group">
+            <div class="radio-item">
+              <div class="radio-ring"></div>
+              <span class="radio-label">Telefonisch</span>
+            </div>
+            <div class="radio-item">
+              <div class="radio-ring radio-ring-selected"><div class="radio-dot"></div></div>
+              <span class="radio-label">Videobellen</span>
+            </div>
+          </div>
+          <div class="ds-note">Radio accent: Red-62 (#FF603E)</div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Default input — no icon (simple booking fields) -->
+        <div class="form-group">
+          <label class="input-label">E-mailadres</label>
+          <div class="input-wrap">
+            <input class="input-base no-icon" type="email" placeholder="naam@voorbeeld.nl">
+          </div>
+          <div class="input-hint">Wij sturen je een bevestiging</div>
+        </div>
+
+        <!-- Error input -->
+        <div class="form-group">
+          <label class="input-label">Telefoonnummer</label>
+          <div class="input-wrap">
+            <input class="input-base no-icon input-error" type="tel" value="abc123">
+          </div>
+          <div class="input-error-msg">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+              <path d="M1 21H23L12 2L1 21ZM13 18H11V16H13V18ZM13 14H11V10H13V14Z" fill="#FF603E"/>
+            </svg>
+            Voer een geldig telefoonnummer in
+          </div>
+        </div>
+
+        <!-- Checkboxes — no dividers -->
+        <div class="form-group">
+          <div class="input-label">Beschikbaarheid</div>
+          <div class="check-item"><div class="check-box check-box-checked"><svg width="10" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="check-label">Ochtend (9:00 – 12:00)</span></div>
+          <div class="check-item"><div class="check-box"></div><span class="check-label">Middag (12:00 – 17:00)</span></div>
+          <div class="check-item"><div class="check-box"></div><span class="check-label">Avond (17:00 – 20:00)</span></div>
+        </div>
+      </div>
+
+      <!-- Right: "Jouw gegevens" style form with icons, required asterisks, section heading -->
+      <div class="form-section">
+        <div class="ds-label" style="margin-bottom:14px;">"Jouw gegevens" form — pill inputs with icons, required marks, section avatar</div>
+
+        <!-- Section heading: coral avatar + Azure-25 bold title (Buenos Aires 600, 16px) -->
+        <div class="form-section-heading">
+          <div class="form-section-avatar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="white"/>
+              <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="white"/>
+            </svg>
+          </div>
+          <div class="form-section-title">Jouw gegevens</div>
+        </div>
+
+        <!-- Two-column name row -->
+        <div style="display:flex;gap:12px;margin-bottom:16px;">
+          <div style="flex:1;">
+            <label class="input-label">Voornaam <span class="input-required">*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="#0075FF"/>
+                  <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="#0075FF"/>
+                </svg>
+              </span>
+              <input class="input-base" type="text" placeholder="">
+            </div>
+          </div>
+          <div style="flex:1;">
+            <label class="input-label">Achternaam <span class="input-required">*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="#0075FF"/>
+                  <path d="M12 14C7.58172 14 4 17.5817 4 22H20C20 17.5817 16.4183 14 12 14Z" fill="#0075FF"/>
+                </svg>
+              </span>
+              <input class="input-base" type="text" placeholder="">
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone with icon -->
+        <div class="form-group">
+          <label class="input-label">Telefoonnummer <span class="input-required">*</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.62 10.79C8.06 13.62 10.38 15.93 13.21 17.38L15.41 15.18C15.68 14.91 16.08 14.82 16.43 14.94C17.55 15.31 18.76 15.51 20 15.51C20.55 15.51 21 15.96 21 16.51V20C21 20.55 20.55 21 20 21C10.61 21 3 13.39 3 4C3 3.45 3.45 3 4 3H7.5C8.05 3 8.5 3.45 8.5 4C8.5 5.25 8.7 6.45 9.07 7.57C9.18 7.92 9.1 8.31 8.82 8.59L6.62 10.79Z" fill="#0075FF"/>
+              </svg>
+            </span>
+            <input class="input-base" type="tel" placeholder="">
+          </div>
+        </div>
+
+        <!-- Email with icon -->
+        <div class="form-group">
+          <label class="input-label">E-mailadres <span class="input-required">*</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM20 8L12 13L4 8V6L12 11L20 6V8Z" fill="#0075FF"/>
+              </svg>
+            </span>
+            <input class="input-base" type="email" placeholder="">
+          </div>
+        </div>
+
+        <!-- Password with eye icon right -->
+        <div class="form-group">
+          <label class="input-label">Voer een wachtwoord in <span class="input-required">*</span></label>
+          <div class="input-wrap">
+            <input class="input-base no-icon" type="password" placeholder="" style="padding-right:44px;">
+            <span class="input-icon-right">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4.5C7 4.5 2.73 7.61 1 12C2.73 16.39 7 19.5 12 19.5C17 19.5 21.27 16.39 23 12C21.27 7.61 17 4.5 12 4.5ZM12 17C9.24 17 7 14.76 7 12C7 9.24 9.24 7 12 7C14.76 7 17 9.24 17 12C17 14.76 14.76 17 12 17ZM12 9C10.34 9 9 10.34 9 12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12C15 10.34 13.66 9 12 9Z" fill="#979797"/>
+              </svg>
+            </span>
+          </div>
+          <div class="input-hint">Met deze gegevens kun je inloggen op jouw dashboard.</div>
+        </div>
+
+        <!-- Consent checkboxes — no dividers -->
+        <div class="form-group" style="margin-top:8px;">
+          <div class="check-item"><div class="check-box"></div><span class="check-label">Ja, je ontvangt graag onze e-mails met handige tips voor huizenbezitters.</span></div>
+          <div class="check-item"><div class="check-box"></div><span class="check-label">Ja, je ontvangt graag onze nieuwsbrief vol hypotheekupdates. Je kunt 'm elke drie maanden verwachten.</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Input anatomy note -->
+    <div style="background:white;padding:18px 22px;border-radius:8px;border:1px solid var(--color-grey-93);margin-top:8px;max-width:700px;">
+      <div class="ds-label" style="margin-bottom:8px;">Input anatomy</div>
+      <div style="font-size:12px;color:var(--color-grey-40);line-height:2.2;font-family:monospace;">
+        Shape     · border-radius: 9999px (full pill)<br>
+        Border    · 1.5px solid Grey-82 (#D1D1D1) — no shadow<br>
+        Focus     · border-color: Azure-50 (#0075FF)<br>
+        Error     · border-color: Red-62 (#FF603E)<br>
+        Padding   · 12px 18px 12px 44px (with icon) · 12px 18px (no icon)<br>
+        Icon      · Azure-50 (#0075FF) · left: 16px · font-size: 16px<br>
+        Label     · Buenos Aires 350 · 16px / 25px · Grey-27 · required asterisk: Red-62<br>
+        Hint      · Buenos Aires 350 · 14px / 19.6px · Grey-59<br>
+        Error     · Buenos Aires 350 · 14px · Red-62<br>
+        Section heading · coral circle avatar (32px) + Azure-25 Buenos Aires 600 16px title<br>
+        Radio label · Buenos Aires 350 · 16px / 25px<br>
+        Check label · Buenos Aires 350 · 14px / 18.2px
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 9. CALENDAR ────────────────────────────────────────────── -->
+  <section id="calendar" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Calendar / Date Picker</div>
+    <div style="background:white;padding:24px;border-radius:8px;border:1px solid var(--color-grey-93);display:inline-block;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <button class="btn" style="font-size:18px;color:var(--color-grey-40);background:none;padding:0 8px;">‹</button>
+        <span style="font-size:14px;font-weight:600;color:var(--color-navy);font-family:var(--font-heading),var(--font-fallback);">Februari 2026</span>
+        <button class="btn" style="font-size:18px;color:var(--color-grey-40);background:none;padding:0 8px;">›</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,32px);gap:2px;text-align:center;">
+        <span style="font-size:11px;color:var(--color-grey-59);font-weight:600;padding:4px 0;">Ma</span>
+        <span style="font-size:11px;color:var(--color-grey-59);font-weight:600;padding:4px 0;">Di</span>
+        <span style="font-size:11px;color:var(--color-grey-59);font-weight:600;padding:4px 0;">Wo</span>
+        <span style="font-size:11px;color:var(--color-grey-59);font-weight:600;padding:4px 0;">Do</span>
+        <span style="font-size:11px;color:var(--color-grey-59);font-weight:600;padding:4px 0;">Vr</span>
+        <span style="font-size:11px;color:var(--color-grey-59);font-weight:600;padding:4px 0;">Za</span>
+        <span style="font-size:11px;color:var(--color-grey-59);font-weight:600;padding:4px 0;">Zo</span>
+        <div class="cal-day cal-day-disabled">27</div><div class="cal-day cal-day-disabled">28</div><div class="cal-day cal-day-disabled">29</div><div class="cal-day cal-day-disabled">30</div><div class="cal-day cal-day-disabled">31</div><div class="cal-day cal-day-disabled">1</div><div class="cal-day cal-day-disabled">2</div>
+        <div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div><div class="cal-day cal-day-disabled">8</div><div class="cal-day cal-day-disabled">9</div>
+        <div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div><div class="cal-day cal-day-disabled">15</div><div class="cal-day cal-day-disabled">16</div>
+        <div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div><div class="cal-day cal-day-disabled">22</div><div class="cal-day cal-day-disabled">23</div>
+        <div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day cal-day-today">27</div><div class="cal-day cal-day-selected">28</div><div class="cal-day cal-day-disabled">29</div>
+      </div>
+    </div>
+    <div class="ds-note" style="margin-top:12px;">Selected date: Green (#4BFF7D) filled circle · Today: Navy outline · Disabled/weekend: Grey-73 text · Weekends always disabled in booking</div>
+  </section>
+
+
+  <!-- ── 10. TOPIC CHIPS ────────────────────────────────────────── -->
+  <section id="chips" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Topic Chips — "Waarmee mogen wij je helpen?"</div>
+    <div class="ds-note" style="margin-bottom:16px;">All chips on the homepage use the filled green variant (same as primary button). Not outlined.</div>
+    <div class="chip-group">
+      <button class="chip chip-green">Eerste huis kopen</button>
+      <button class="chip chip-green">Volgend huis kopen</button>
+      <button class="chip chip-green">Hypotheek bij scheiding</button>
+      <button class="chip chip-green">Bieden zonder voorbehoud garantie</button>
+      <button class="chip chip-green">Hypotheek oversluiten</button>
+      <button class="chip chip-green">Hypotheek voor ZZP'er</button>
+    </div>
+    <div style="margin-top:20px;">
+      <div class="ds-label" style="margin-bottom:8px;">Outlined variant — secondary / inactive state</div>
+      <div class="chip-group">
+        <button class="chip chip-outline">Eerste huis kopen</button>
+        <button class="chip chip-outline">Volgend huis kopen</button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 11. BADGES ────────────────────────────────────────────── -->
+  <section id="badges" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Badges</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+      <span class="badge badge-green">Goedgekeurd</span>
+      <span class="badge badge-blue">In behandeling</span>
+      <span class="badge badge-orange">Actie vereist</span>
+      <span class="badge badge-red">Afgekeurd</span>
+      <span class="badge badge-grey">Concept</span>
+    </div>
+  </section>
+
+
+  <!-- ── 12. CARDS ─────────────────────────────────────────────── -->
+  <section id="cards" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Cards</div>
+    <div class="card-row">
+      <div class="card card-default">
+        <div class="card-body">
+          <div class="card-title">Eerste huis kopen</div>
+          <div class="card-text">Wij helpen je stap voor stap aan je eerste hypotheek, van oriëntatie tot sleuteloverdracht.</div>
+          <div style="margin-top:16px;"><button class="btn btn-primary" style="font-size:16px;padding:10px 20px;">Meer informatie</button></div>
+        </div>
+      </div>
+      <div class="card card-default">
+        <div class="card-body">
+          <div class="card-title">Hypotheek oversluiten</div>
+          <div class="card-text">Profiteer van een lagere rente of betere voorwaarden door je hypotheek over te sluiten.</div>
+          <div style="margin-top:16px;"><button class="btn btn-primary" style="font-size:16px;padding:10px 20px;">Meer informatie</button></div>
+        </div>
+      </div>
+      <div class="card card-elevated" style="background:var(--color-navy);">
+        <div class="card-body">
+          <div class="card-title" style="color:white;">10.000+ klanten</div>
+          <div class="card-text" style="color:rgba(255,255,255,0.8);">Al meer dan tienduizend mensen geholpen aan de beste hypotheek.</div>
+          <div style="margin-top:16px;"><button class="btn btn-ghost" style="font-size:16px;padding:10px 20px;">Bekijk reviews</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video card with play button -->
+    <div style="margin-top:20px;">
+      <div class="ds-label" style="margin-bottom:10px;">Video / "Wij zijn Frits" card — navy bg with play button</div>
+      <div style="background:var(--color-navy);border-radius:var(--radius-md);padding:40px;display:flex;align-items:center;justify-content:center;min-height:160px;position:relative;">
+        <button class="play-btn"></button>
+        <span style="color:rgba(255,255,255,0.4);font-size:12px;margin-left:16px;font-family:var(--font-body),var(--font-fallback);">Video afspelen</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 13. INFO CARD (Booking intro) ─────────────────────────── -->
+  <section id="infocards" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Info Card — Booking tool intro block</div>
+    <div class="ds-note" style="margin-bottom:16px;">Blue filled card (#0075FF) at the top of the booking flow. White text, green checkmarks. Not a standard card variant — specific to booking intro.</div>
+    <div class="info-card" style="max-width:500px;">
+      <div class="info-card-title">Wanneer wil je een gratis hypotheekgesprek met een gecertificeerde adviseur?</div>
+      <ul class="info-card-list">
+        <li>Lekker relaxed. Tijdens je gratis gesprek wordt 80% van het advies al besproken.</li>
+        <li>Wij vergelijken álle hypotheekverstrekkers, en jij kijkt mee.</li>
+        <li>Al meer dan op het winnende bod met onze biedberekening? Bespreek het met jouw adviseur.</li>
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- ── 14. SECTION BACKGROUNDS ───────────────────────────────── -->
+  <section id="backgrounds" class="ds-section">
+    <div class="ds-section-title">Foundation</div>
+    <div class="ds-section-heading">Section Backgrounds</div>
+    <div class="bg-demo section-white bg-outline" style="color:var(--color-grey-40);">White #FFFFFF — default content sections</div>
+    <div class="bg-demo section-sky" style="color:var(--color-azure-25);">Sky Light #DBF2FF — hero (homepage), feature sections</div>
+    <div class="bg-demo section-navy" style="color:white;">Navy #0B3954 — "Wij zijn Frits", dark trust sections</div>
+    <div class="bg-demo section-cream" style="color:var(--color-grey-40);">Cream #F3F3E9 — warm alternate sections, FAQ area</div>
+    <div class="bg-demo section-green" style="color:var(--color-green-43);">Green Light #CCFFD5 — booking tool step backgrounds</div>
+    <div class="bg-demo section-coral" style="color:white;">Coral #FF6B35 — newsletter / "Op de hoogte blijven?" section ← NEW</div>
+  </section>
+
+
+  <!-- ── 15. DECORATIVE SHAPES ─────────────────────────────────── -->
+  <section id="decorative" class="ds-section">
+    <div class="ds-section-title">Foundation</div>
+    <div class="ds-section-heading">Decorative Shapes</div>
+    <div class="ds-note" style="margin-bottom:20px;">Used as background decorations on the homepage hero and FAQ sections. Never interactive.</div>
+
+    <div style="display:flex;gap:40px;flex-wrap:wrap;align-items:flex-end;">
+      <div style="text-align:center;">
+        <div style="width:80px;height:80px;border-radius:50%;background:var(--color-azure);display:inline-block;"></div>
+        <div class="ds-note" style="margin-top:8px;">Filled circle<br>Azure #4AADFF<br>hero section</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:80px;height:80px;border-radius:50%;border:4px solid var(--color-green);background:transparent;display:inline-block;"></div>
+        <div class="ds-note" style="margin-top:8px;">Outline circle<br>Green #4BFF7D<br>hero section</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:70px;height:70px;border:4px solid var(--color-green);background:transparent;transform:rotate(-15deg);display:inline-block;margin:10px;"></div>
+        <div class="ds-note" style="margin-top:8px;">Rotated square<br>outline Green #4BFF7D<br>hero + FAQ section<br>rotate(-15deg)</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:50px;height:50px;border-radius:50%;border:3px solid var(--color-green);background:transparent;display:inline-block;"></div>
+        <div class="ds-note" style="margin-top:8px;">Small outline circle<br>Green #4BFF7D<br>FAQ section</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 16. STEP INDICATOR ─────────────────────────────────────── -->
+  <section id="steps" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Step Indicator — Booking Tool</div>
+    <div style="background:white;padding:28px 32px;border-radius:8px;border:1px solid var(--color-grey-93);display:inline-block;">
+      <div class="steps">
+        <div class="step-wrapper"><div class="step-dot step-dot-done"><svg width="10" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5L4.5 8.5L11 1" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="step-label">Situatie</div></div>
+        <div class="step-line step-line-done"></div>
+        <div class="step-wrapper"><div class="step-dot step-dot-done"><svg width="10" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5L4.5 8.5L11 1" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="step-label">Inkomen</div></div>
+        <div class="step-line step-line-done"></div>
+        <div class="step-wrapper"><div class="step-dot step-dot-active">3</div><div class="step-label step-label-active">Woning</div></div>
+        <div class="step-line"></div>
+        <div class="step-wrapper"><div class="step-dot step-dot-inactive">4</div><div class="step-label">Afspraak</div></div>
+        <div class="step-line"></div>
+        <div class="step-wrapper"><div class="step-dot step-dot-inactive">5</div><div class="step-label">Bevestiging</div></div>
+      </div>
+    </div>
+    <div class="ds-note" style="margin-top:10px;">Done: Green (#4BFF7D) · Active: Navy (#0B3954) · Inactive: Grey-85 · Line done: Green · Line inactive: Grey-85</div>
+  </section>
+
+
+  <!-- ── 17. FAQ ACCORDION ──────────────────────────────────────── -->
+  <section id="faq" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">FAQ Accordion</div>
+    <div class="ds-note" style="margin-bottom:16px;">Used on homepage "Veelgestelde vragen" section. Cream/warm background section. + / – icon in circular border.</div>
+    <div style="max-width:560px;">
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q">Hoe werkt Frits? <div class="faq-icon faq-icon-open">−</div></div>
+          <div class="faq-a">Frits is een onafhankelijke hypotheekadviseur. Wij vergelijken alle banken op rente en voorwaarden en adviseren je kosteloos.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Wat kun je verwachten van een eerste hypotheekgesprek? <div class="faq-icon">+</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is Frits echt onafhankelijk? <div class="faq-icon">+</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Bij hoeveel banken kan ik terecht via Frits? <div class="faq-icon">+</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Hoeveel kost hypotheekadvies bij Frits? <div class="faq-icon">+</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 18. KIYOH + REVIEWS ────────────────────────────────────── -->
+  <section id="kiyoh" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Kiyoh Widget &amp; Review Cards</div>
+
+    <!-- ── Kiyoh badge varianten ── -->
+    <div class="ds-label" style="margin-bottom:16px;">Kiyoh badge varianten</div>
+    <div style="display:flex;align-items:flex-start;gap:48px;flex-wrap:wrap;margin-bottom:32px;">
+
+      <!-- Variant 1: Header (42px, alleen ring + score) -->
+      <div>
+        <div class="ds-note" style="margin-bottom:10px;">Header — 42px</div>
+        <div class="kiyoh-ring" style="width:42px;height:42px;">
+          <svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="kg-header" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FFC107"/>
+                <stop offset="50%" stop-color="#FF9800"/>
+                <stop offset="100%" stop-color="#F44336"/>
+              </linearGradient>
+            </defs>
+            <circle cx="21" cy="21" r="19" fill="white" stroke="url(#kg-header)" stroke-width="4"/>
+          </svg>
+          <span class="kiyoh-score" style="font-size:12px;">9.7</span>
+        </div>
+      </div>
+
+      <!-- Variant 2: Standalone badge met naam + count (lichte achtergrond) -->
+      <div>
+        <div class="ds-note" style="margin-bottom:10px;">Standalone — 64px (lichte sectie)</div>
+        <div class="kiyoh-badge">
+          <div class="kiyoh-ring" style="width:64px;height:64px;">
+            <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="kg-standalone" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFC107"/>
+                  <stop offset="50%" stop-color="#FF9800"/>
+                  <stop offset="100%" stop-color="#F44336"/>
+                </linearGradient>
+              </defs>
+              <circle cx="32" cy="32" r="28" fill="white" stroke="url(#kg-standalone)" stroke-width="5.5"/>
+            </svg>
+            <span class="kiyoh-score" style="font-size:16px;">9.7</span>
+          </div>
+          <div class="kiyoh-info">
+            <div class="kiyoh-name">Kiyoh</div>
+            <div class="kiyoh-stars">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+            </div>
+            <div class="kiyoh-count">1500 beoordelingen</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Variant 3: Footer (80px, op navy achtergrond) -->
+      <div style="background:var(--color-navy);padding:24px 28px;border-radius:12px;">
+        <div class="ds-note" style="margin-bottom:10px;color:rgba(255,255,255,0.5);">Footer — 80px (donkere sectie)</div>
+        <div class="kiyoh-badge">
+          <div class="kiyoh-ring" style="width:80px;height:80px;">
+            <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="kg-footer" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFC107"/>
+                  <stop offset="50%" stop-color="#FF9800"/>
+                  <stop offset="100%" stop-color="#F44336"/>
+                </linearGradient>
+              </defs>
+              <circle cx="40" cy="40" r="36" fill="white" stroke="url(#kg-footer)" stroke-width="7"/>
+            </svg>
+            <span class="kiyoh-score" style="font-size:20px;">9.7</span>
+          </div>
+          <div class="kiyoh-info">
+            <div class="kiyoh-name" style="color:white;">Kiyoh</div>
+            <div class="kiyoh-count" style="color:var(--color-azure);">1500 beoordelingen</div>
+            <div style="margin-top:8px;">
+              <a href="#" style="display:inline-block;padding:7px 18px;border:1.5px solid white;border-radius:9999px;font-family:var(--font-body),var(--font-fallback);font-size:13px;color:white;text-decoration:none;">Beoordeel ons</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── Review cards ── -->
+    <div class="ds-label" style="margin-bottom:12px;">Review cards</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <div class="review-card">
+        <div class="review-stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+        </div>
+        <div class="review-title">Toepassing bij ken Frits!</div>
+        <div class="review-text">We zijn uitstekend goed geholpen door Joëlle bij het kopen van ons eerste huis. Ze was altijd bereikbaar en handelde alles supersnel af.</div>
+        <div class="review-author">Bjorn uit Arnhem</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+        </div>
+        <div class="review-title">Uitstekend geholpen</div>
+        <div class="review-text">Prima, duidelijk en fijn contact gehad.</div>
+        <div class="review-author">Joran uit Utrecht</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFB814" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+        </div>
+        <div class="review-title">Goede uitleg en begeleiding van begin tot eind</div>
+        <div class="review-text">Voor het afsluiten van onze hypotheek bij de koop van onze eerste woning hebben we bij Frits uitstekend advies gekregen.</div>
+        <div class="review-author">Sandra uit Amsterdam</div>
+      </div>
+    </div>
+
+    <div class="ds-note" style="margin-top:12px;">
+      Kiyoh ring: SVG gradient geel (#FFC107) → oranje (#FF9800) → rood (#F44336) · Score: Aeonik 700 · Naam: Buenos Aires 600 · Count: Aeonik 400 azure kleur · Sterren: SVG fill Orange-54 (#FFB814)
+    </div>
+  </section>
+
+
+  <!-- ── 19. NEWSLETTER SECTION ─────────────────────────────────── -->
+  <section id="newsletter" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Newsletter — "Op de hoogte blijven?"</div>
+    <div class="ds-note" style="margin-bottom:16px;">Coral (#FF6B35) full-width section. White text. Email input with navy submit button.</div>
+    <div class="newsletter-section">
+      <div class="newsletter-title">Op de hoogte blijven?</div>
+      <div class="newsletter-subtitle">Schrijf je in voor onze nieuwsbrief boordevol hypotheeknieuws en aanbiedingen</div>
+      <div class="newsletter-form">
+        <input class="newsletter-input" type="email" placeholder="Jouw e-mailadres">
+        <button class="btn btn-newsletter">Inschrijven</button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── 20. ALERTS ─────────────────────────────────────────────── -->
+  <section id="alerts" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Alerts &amp; Notifications</div>
+    <div class="alert alert-info">
+      <span class="alert-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="#2281D4" stroke-width="2"/><path d="M12 8V12M12 16H12.01" stroke="#2281D4" stroke-width="2" stroke-linecap="round"/></svg></span>
+      <div>Je aanvraag wordt verwerkt. Dit duurt gemiddeld 2 werkdagen.</div>
+    </div>
+    <div class="alert alert-success">
+      <span class="alert-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#34A853"/><path d="M7 12L10.5 15.5L17 8.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div>Afspraak bevestigd! Je ontvangt een bevestigingsmail op het opgegeven adres.</div>
+    </div>
+    <div class="alert alert-warning">
+      <span class="alert-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 21H23L12 2L1 21Z" fill="#FFB814"/><path d="M12 9V13M12 17H12.01" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></span>
+      <div>Let op: je sessie verloopt over 5 minuten. Sla je gegevens op.</div>
+    </div>
+    <div class="alert alert-error">
+      <span class="alert-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#FF603E"/><path d="M8 8L16 16M16 8L8 16" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></span>
+      <div>Er is iets misgegaan. Probeer het opnieuw of neem contact met ons op.</div>
+    </div>
+  </section>
+
+
+  <!-- ── 21. FOOTER ────────────────────────────────────────────── -->
+  <section id="footer" class="ds-section">
+    <div class="ds-section-title">Components</div>
+    <div class="ds-section-heading">Footer</div>
+    <div class="ds-note" style="margin-bottom:16px;">Exacte footer van ikbenfrits.nl — navy achtergrond, wit logo, 2 navigatiekolommen, Kiyoh widget, juridische balk onderaan.</div>
+
+    <!-- Exact Frits footer preview -->
+    <div style="border-radius:12px;overflow:hidden;">
+
+      <!-- Footer main area -->
+      <div style="background:#0B3954;padding:56px 48px 40px;">
+        <div style="max-width:960px;margin:0 auto;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:40px;align-items:start;">
+
+            <!-- Column 1: Logo + adres + contact -->
+            <div>
+              <div style="margin-bottom:24px;">
+                <svg width="141" height="44" viewBox="0 0 141 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14.0327 43.9999C18.381 43.9999 21.9059 40.475 21.9059 36.1267C21.9059 31.7784 18.381 28.2534 14.0327 28.2534C9.6844 28.2534 6.15942 31.7784 6.15942 36.1267C6.15942 40.475 9.6844 43.9999 14.0327 43.9999Z" fill="#4BFF7D"/>
+                  <path d="M29.8917 9.5888L28.2014 0L9.74179e-06 4.97133L1.69032 14.5601L29.8917 9.5888Z" fill="#4AADFF"/>
+                  <path d="M32.1857 22.5971L30.4954 13.0083L2.29396 17.9796L3.98426 27.5684L32.1857 22.5971Z" fill="#4AADFF"/>
+                  <path d="M65.9496 24.2481V19.0773H53.7764V11.2334H68.1589V6.0625H48.1858V36.7371H53.7764V24.2481H65.9496Z" fill="white"/>
+                  <path d="M71.5988 14.4761V36.7371H77.0542V25.0807C77.0542 21.093 79.3986 19.0773 82.5997 19.0773C83.4564 19.0773 84.4483 19.2526 85.3951 19.6031L86.2517 14.6514C85.1696 14.3446 84.0876 14.1694 83.0957 14.1694C80.3454 14.1694 77.9559 15.3525 76.9189 17.9818V14.4761H71.5988Z" fill="white"/>
+                  <path d="M90.3196 36.7371H95.775V14.4761H90.3196V36.7371Z" fill="white"/>
+                  <path d="M99.582 14.4761V19.2087H104.226V29.4628C104.226 34.2831 107.562 37 111.981 37C114.145 37 116.354 36.3427 118.428 35.0281L116.985 31.1718C115.813 31.873 114.505 32.2235 113.423 32.2235C111.349 32.2235 109.681 31.0842 109.681 28.5864V19.2087H116.489V14.4761H109.681V8.77939H104.226V14.4761H99.582Z" fill="white"/>
+                  <path d="M136.208 20.5672L139.048 17.1053C136.884 15.0019 133.683 13.9502 130.572 13.9502C126.019 13.9502 121.961 16.2289 121.961 20.9616C121.961 26.1763 126.965 27.0965 130.662 27.7976C133.458 28.3235 134.9 28.8055 134.9 30.2954C134.9 31.6977 133.458 32.3988 131.474 32.3988C128.949 32.3988 125.658 31.3909 123.719 29.1123L120.698 32.7932C123.268 35.5101 127.146 37 130.978 37C136.253 37 140.311 34.2393 140.311 29.6819C140.311 24.8616 135.712 23.9852 132.06 23.2841C128.949 22.7144 127.326 22.32 127.326 20.6987C127.326 19.2526 128.634 18.42 130.617 18.42C132.376 18.42 134.675 19.0773 136.208 20.5672Z" fill="white"/>
+                  <circle cx="92.8733" cy="7.4375" r="3.4375" fill="#4BFF7D"/>
+                </svg>
+              </div>
+              <div style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);line-height:1.7;margin-bottom:16px;">
+                Science Park 400,<br>1098 XH Amsterdam
+              </div>
+              <div style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);line-height:1.7;">
+                020 235 85 30<br>hallo@ikbenfrits.nl
+              </div>
+            </div>
+
+            <!-- Column 2: Hypotheekadvies links -->
+            <div>
+              <div style="font-family:var(--font-heading),var(--font-fallback);font-size:16px;font-weight:600;color:white;margin-bottom:20px;">Hypotheekadvies</div>
+              <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px;">
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">Hypotheekadviseur</a></li>
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">Kennisbank</a></li>
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">Rekentools</a></li>
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">Biedverzekering</a></li>
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">Maak een afspraak</a></li>
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">Veelgestelde vragen</a></li>
+              </ul>
+            </div>
+
+            <!-- Column 3: Over Frits links -->
+            <div>
+              <div style="font-family:var(--font-heading),var(--font-fallback);font-size:16px;font-weight:600;color:white;margin-bottom:20px;">Over Frits</div>
+              <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px;">
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">Wij zijn Frits</a></li>
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">Contact</a></li>
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">Team</a></li>
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">Vacatures</a></li>
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">Kosten hypotheekadvies</a></li>
+                <li><a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:15px;color:rgba(255,255,255,0.75);text-decoration:none;">In de media</a></li>
+              </ul>
+            </div>
+
+            <!-- Column 4: Kiyoh widget -->
+            <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;">
+              <!-- Kiyoh ring badge -->
+              <div style="position:relative;display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;">
+                <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="position:absolute;top:0;left:0;">
+                  <defs>
+                    <linearGradient id="kiyohFooter" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style="stop-color:#FFC107"/>
+                      <stop offset="50%" style="stop-color:#FF9800"/>
+                      <stop offset="100%" style="stop-color:#F44336"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="40" cy="40" r="36" fill="white" stroke="url(#kiyohFooter)" stroke-width="7"/>
+                </svg>
+                <span style="position:relative;z-index:1;font-family:var(--font-body),var(--font-fallback);font-size:20px;font-weight:700;color:#000;">9.7</span>
+              </div>
+              <div style="font-family:var(--font-heading),var(--font-fallback);font-size:16px;font-weight:600;color:white;">Kiyoh</div>
+              <div style="font-family:var(--font-body),var(--font-fallback);font-size:14px;color:var(--color-azure);">1500 beoordelingen</div>
+              <a href="#" style="display:inline-block;margin-top:4px;padding:9px 22px;border:1.5px solid white;border-radius:9999px;font-family:var(--font-body),var(--font-fallback);font-size:14px;color:white;text-decoration:none;">Beoordeel ons</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Legal bar -->
+      <div style="background:#0a3148;padding:16px 48px;">
+        <div style="max-width:960px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
+          <div style="font-family:var(--font-body),var(--font-fallback);font-size:13px;color:rgba(255,255,255,0.55);">
+            &copy; Frits &ndash; 2026 | Frits Financial Services BV. is ingeschreven bij de AFM onder vergunningsnummer 12049494
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;">
+            <a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;">Privacy</a>
+            <a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;">Cookiestatement</a>
+            <a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;">Algemene voorwaarden</a>
+            <a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;">Toegankelijkheidsverklaring</a>
+            <a href="#" style="font-family:var(--font-body),var(--font-fallback);font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;">Sitemap</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="ds-note" style="margin-top:14px;">
+      Footer logo: witte SVG versie (141×44px) — zelfde icon als header maar tekst wit.<br>
+      Achtergrond: Navy #0B3954 · Legal balk: iets donkerder #0a3148.<br>
+      Kiyoh ring: gradient geel (#FFC107) → oranje (#FF9800) → rood (#F44336), 80px, score Aeonik 700 20px.<br>
+      Navigatietitels: Buenos Aires 600 16px wit · Links: Aeonik 400 15px rgba(255,255,255,0.75).
+    </div>
+  </section>
+
+
+  <!-- ── 23. TOKEN REFERENCE ────────────────────────────────────── -->
+  <section id="tokens" class="ds-section">
+    <div class="ds-section-title">Reference</div>
+    <div class="ds-section-heading">CSS Token Reference</div>
+    <div style="background:var(--color-navy);color:white;border-radius:8px;padding:24px;font-family:monospace;font-size:12px;overflow-x:auto;">
+<pre style="color:rgba(255,255,255,0.9);white-space:pre-wrap;line-height:1.8;">:root {
+  /* ── Brand ── */
+  --color-navy:         #0B3954;   /* hero, footer, dark bg */
+  --color-azure:        #4AADFF;   /* accent, decorative shapes */
+  --color-green:        #4BFF7D;   /* primary CTA, calendar dot */
+  --color-coral:        #FF6B35;   /* newsletter section bg ← NEW */
+
+  /* ── Section tints ── */
+  --color-sky-light:    #DBF2FF;   /* hero, feature sections */
+  --color-green-light:  #CCFFD5;   /* booking step bg */
+  --color-cream:        #F3F3E9;   /* warm alt, FAQ section */
+
+  /* ── Key signals ── */
+  --color-red-62:       #FF603E;   /* error, radio accent */
+  --color-orange-54:    #FFB814;   /* star ratings */
+  --color-yellow-52:    #FFC808;   /* Kiyoh badge ring */
+  --color-orange-89:    #FFD8C5;   /* peach button */
+
+  /* ── Neutrals ── */
+  --color-grey-27:      #464646;   /* body text */
+  --color-grey-59:      #979797;   /* placeholder, captions */
+  --color-grey-73:      #B9B9B9;   /* disabled text */
+  --color-grey-82:      #D1D1D1;   /* borders */
+  --color-grey-85:      #D9D9D9;   /* disabled bg, step lines */
+  --color-grey-93:      #ECECEC;   /* card borders, separators */
+
+  /* ── Fonts ── */
+  --font-heading:  'Buenos Aires', serif;
+  /* → H1–H4, form labels, UI labels, radio/check labels, */
+  /*   step labels, FAQ questions, card titles, badges,    */
+  /*   calendar days, form section titles, navbar logo,    */
+  /*   kiyoh score + name, review titles, newsletter title */
+  --font-body:     'Aeonik', sans-serif;
+  /* → body copy, buttons (all except btn-booking), nav   */
+  /*   links, input hints, error msgs, alerts, FAQ answers,*/
+  /*   review body, newsletter subtitle/input, topic chips */
+  /*   letter-spacing on body text: 0.02em (= 0.36px @18) */
+  --fw-light:      350;
+  --fw-regular:    400;
+  --fw-semibold:   600;
+  --fw-bold:       700;
+
+  /* ── Type scale ── */
+  --text-xs:    12px;   --text-sm:   14px;
+  --text-base:  16px;   --text-md:   18px;
+  --text-lg:    20px;   --text-xl:   24px;
+  --text-2xl:   30px;   --text-3xl:  36px;
+
+  /* ── Spacing ── */
+  --space-1: 4px;    --space-2: 8px;    --space-3: 12px;
+  --space-4: 16px;   --space-5: 20px;   --space-6: 24px;
+  --space-7: 32px;   --space-8: 40px;   --space-9: 48px;
+  --space-10: 64px;  --space-11: 80px;  --space-13: 112px;
+
+  /* ── Radius ── */
+  --radius-sm:   5px;     /* dropdowns, small elements */
+  --radius-md:   20px;    /* cards, info panels */
+  --radius-lg:   30px;    /* peach button */
+  --radius-xl:   50px;    /* primary/secondary buttons */
+  --radius-full: 9999px;  /* inputs (pill!), booking btn, chips, badges */
+
+  /* ── Shadows ── */
+  --shadow-xs: 0px 1px 2px rgba(16, 24, 40, 0.05);  /* buttons */
+  --shadow-sm: 0px 1px 4px rgba(0, 0, 0, 0.30);      /* inputs */
+  --shadow-md: 0px 2px 0px rgba(0, 0, 0, 0.02);      /* booking chips */
+
+  /* ── Layout ── */
+  --container-max:  1440px;
+  --section-px:     112px;
+  --section-py-md:  80px;
+}</pre>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
