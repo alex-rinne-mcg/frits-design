@@ -115,7 +115,7 @@
 
     /* ── BRAND ARTIFACTS ────────────────────────────────────── */
     .ba { position: absolute; pointer-events: none; z-index: 0; }
-    .ba-sq  { border: 2.5px solid var(--color-green); background: transparent; border-radius: 6px; }
+    .ba-sq  { border: 2.5px solid var(--color-green); background: transparent; border-radius: 0; }
     .ba-cof { background: var(--color-azure); border-radius: 50%; }
     .ba-co  { border: 2.5px solid var(--color-green); background: transparent; border-radius: 50%; }
 
@@ -289,7 +289,7 @@
 
 
     /* ── STEPS (4 stappen) ──────────────────────────────────── */
-    .steps-section { background: var(--color-white); padding: 100px 0; }
+    .steps-section { background: var(--color-white); padding: 100px 0; position: relative; overflow: hidden; }
     .steps-header { text-align: center; margin-bottom: 64px; }
     .steps-header .section-sub { margin: 0 auto; }
 
@@ -336,7 +336,7 @@
 
 
     /* ── HYPOTHEEK ──────────────────────────────────────────── */
-    .hypo-section { background: var(--color-white); padding: 100px 0; }
+    .hypo-section { background: var(--color-white); padding: 100px 0; position: relative; overflow: hidden; }
     .hypo-inner { display: flex; gap: 80px; align-items: center; }
     @media (max-width: 900px) { .hypo-inner { flex-direction: column; gap: 48px; } }
 
@@ -377,7 +377,7 @@
 
 
     /* ── KOSTEN ─────────────────────────────────────────────── */
-    .kosten-section { background: var(--color-sky-light); padding: 100px 0; }
+    .kosten-section { background: var(--color-sky-light); padding: 100px 0; position: relative; overflow: hidden; }
     .kosten-header { text-align: center; margin-bottom: 56px; }
     .kosten-header .section-sub { margin: 0 auto; }
 
@@ -428,7 +428,7 @@
 
 
     /* ── NIET GESCHIKT ──────────────────────────────────────── */
-    .niet-section { background: var(--color-cream); padding: 100px 0; }
+    .niet-section { background: var(--color-cream); padding: 100px 0; position: relative; overflow: hidden; }
     .niet-inner { display: flex; gap: 80px; align-items: flex-start; }
     @media (max-width: 900px) { .niet-inner { flex-direction: column; gap: 40px; } }
 
@@ -551,7 +551,7 @@
 
 
     /* ── REVIEWS ────────────────────────────────────────────── */
-    .reviews-section { background: var(--color-white); padding: 100px 0; }
+    .reviews-section { background: var(--color-white); padding: 100px 0; position: relative; overflow: hidden; }
 
     .kiyoh-strip {
       display: flex; align-items: center;
@@ -590,7 +590,7 @@
 
 
     /* ── FAQ ────────────────────────────────────────────────── */
-    .faq-section { background: var(--color-white); padding: 100px 0; }
+    .faq-section { background: var(--color-white); padding: 100px 0; position: relative; overflow: hidden; }
     .faq-inner { display: flex; gap: 80px; align-items: flex-start; }
     @media (max-width: 900px) { .faq-inner { flex-direction: column; gap: 40px; } }
     .faq-left { flex: 0 0 360px; }
@@ -1074,6 +1074,10 @@
       </div>
     </div>
 
+    <div style="position:relative;">
+      <div class="ba ba-sq"  style="width:72px;height:72px;top:48px;right:80px;transform:rotate(6deg);position:fixed;z-index:0;pointer-events:none;"></div>
+      <div class="ba ba-cof" style="width:88px;height:88px;bottom:120px;left:56px;position:fixed;z-index:0;pointer-events:none;"></div>
+    </div>
     <div class="q-content">
 
       <!-- ── STAP 1: Situatie ── -->
@@ -1669,6 +1673,8 @@
        STAPPEN (4 stappen)
   ══════════════════════════════════════════════════════════ -->
   <section class="steps-section" id="hoe-werkt-het">
+    <div class="ba ba-cof" style="width:80px;height:80px;top:48px;left:56px;"></div>
+    <div class="ba ba-sq"  style="width:60px;height:60px;bottom:48px;right:80px;transform:rotate(-5deg);"></div>
     <div class="container">
       <div class="steps-header">
         <div class="section-eyebrow">Zo werkt het</div>
@@ -1731,6 +1737,8 @@
        HYPOTHEEK — wit
   ══════════════════════════════════════════════════════════ -->
   <section class="hypo-section" id="hypotheek">
+    <div class="ba ba-sq"  style="width:76px;height:76px;top:40px;right:64px;transform:rotate(6deg);"></div>
+    <div class="ba ba-cof" style="width:70px;height:70px;bottom:60px;left:48px;"></div>
     <div class="container">
       <div class="hypo-inner">
 
@@ -1804,6 +1812,8 @@
        TRANSPARANTE KOSTEN — sky-light
   ══════════════════════════════════════════════════════════ -->
   <section class="kosten-section" id="kosten">
+    <div class="ba ba-cof" style="width:90px;height:90px;top:32px;right:72px;"></div>
+    <div class="ba ba-sq"  style="width:56px;height:56px;bottom:56px;left:80px;transform:rotate(8deg);"></div>
     <div class="container">
       <div class="kosten-header">
         <div class="section-eyebrow">Transparante kosten</div>
@@ -1923,6 +1933,8 @@
        NIET GESCHIKT — cream
   ══════════════════════════════════════════════════════════ -->
   <section class="niet-section" id="niet-geschikt">
+    <div class="ba ba-sq"  style="width:68px;height:68px;top:48px;left:64px;transform:rotate(-8deg);"></div>
+    <div class="ba ba-cof" style="width:80px;height:80px;bottom:40px;right:56px;"></div>
     <div class="container">
       <div class="niet-inner">
 
@@ -2081,6 +2093,8 @@
        REVIEWS — wit
   ══════════════════════════════════════════════════════════ -->
   <section class="reviews-section">
+    <div class="ba ba-cof" style="width:86px;height:86px;top:56px;right:64px;"></div>
+    <div class="ba ba-sq"  style="width:64px;height:64px;bottom:48px;left:72px;transform:rotate(5deg);"></div>
     <div class="container">
       <div class="kiyoh-strip">
         <a href="https://www.kiyoh.com/reviews/1058933/Ikbenfrits" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;">
@@ -2138,6 +2152,8 @@
        FAQ — wit
   ══════════════════════════════════════════════════════════ -->
   <section class="faq-section">
+    <div class="ba ba-sq"  style="width:72px;height:72px;top:40px;right:80px;transform:rotate(-4deg);"></div>
+    <div class="ba ba-cof" style="width:76px;height:76px;bottom:48px;left:56px;"></div>
     <div class="container">
       <div class="faq-inner">
 
