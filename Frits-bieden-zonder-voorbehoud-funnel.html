@@ -113,6 +113,12 @@
     @media (max-width: 700px)  { .navbar-inner { padding: 10px 24px; } }
 
 
+    /* ── BRAND ARTIFACTS ────────────────────────────────────── */
+    .ba { position: absolute; pointer-events: none; z-index: 0; }
+    .ba-sq  { border: 2.5px solid var(--color-green); background: transparent; border-radius: 6px; }
+    .ba-cof { background: var(--color-azure); border-radius: 50%; }
+    .ba-co  { border: 2.5px solid var(--color-green); background: transparent; border-radius: 50%; }
+
     /* ── HERO ───────────────────────────────────────────────── */
     .hero { padding-top: 62px; background: var(--color-white); overflow: hidden; }
     .hero-inner {
@@ -208,7 +214,7 @@
     /* ── BIEDVERZEKERING ────────────────────────────────────── */
     .bied-section {
       background: var(--color-sky-light);
-      padding: 100px 0;
+      padding: 100px 0; position: relative; overflow: hidden;
     }
     .bied-inner {
       display: flex; gap: 80px; align-items: center;
@@ -1537,6 +1543,8 @@
       </div>
 
       <div class="hero-right">
+        <div class="ba ba-sq"  style="width:72px;height:72px;top:12px;right:0px;transform:rotate(8deg);"></div>
+        <div class="ba ba-cof" style="width:88px;height:88px;bottom:60px;left:-28px;"></div>
         <div class="hero-photo-mock">
           <img src="https://www.ikbenfrits.nl/hs-fs/hubfs/iStock-1197547540-min.jpg?width=530&height=530&name=iStock-1197547540-min.jpg" alt="Mensen aan het inpakken" class="hero-photo-img">
         </div>
@@ -1563,6 +1571,7 @@
        BIEDVERZEKERING — sky-light
   ══════════════════════════════════════════════════════════ -->
   <section class="bied-section" id="biedverzekering">
+    <div class="ba ba-co"  style="width:100px;height:100px;top:-24px;right:120px;opacity:0.6;"></div>
     <div class="container">
       <div class="bied-inner">
 
@@ -2008,6 +2017,8 @@
        WHY FRITS — navy
   ══════════════════════════════════════════════════════════ -->
   <section class="why-section">
+    <div class="ba ba-co"  style="width:90px;height:90px;top:32px;right:80px;"></div>
+    <div class="ba ba-sq"  style="width:56px;height:56px;bottom:40px;left:60px;transform:rotate(-6deg);opacity:0.5;"></div>
     <div class="container">
       <div class="why-inner">
 
