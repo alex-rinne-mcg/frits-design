@@ -614,11 +614,14 @@
     }
     .faq-icon-open { background: var(--color-navy); border-color: var(--color-navy); color: var(--color-white); }
     .faq-a {
+      display: none;
       padding: 0 22px 18px;
       font-family: var(--font-body), var(--font-fallback);
       font-size: 15px; line-height: 1.6;
       color: var(--color-grey-40); letter-spacing: 0.02em;
     }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-icon { background: var(--color-navy); border-color: var(--color-navy); color: var(--color-white); }
 
 
     /* ── NEWSLETTER ─────────────────────────────────────────── */
@@ -2138,10 +2141,10 @@
 
         <div class="faq-right">
           <div class="faq-list">
-            <div class="faq-item">
+            <div class="faq-item open">
               <div class="faq-q">
                 <span>Kan ik de biedverzekering afsluiten zonder hypotheekadvies bij Frits?</span>
-                <span class="faq-icon faq-icon-open">&#8722;</span>
+                <span class="faq-icon">&#8722;</span>
               </div>
               <div class="faq-a">Nee, dat is helaas niet mogelijk. De biedverzekering is onlosmakelijk verbonden aan het hypotheektraject bij Frits. Je kunt de verzekering alleen afsluiten als je ook je hypotheek via ons regelt.</div>
             </div>
@@ -2195,28 +2198,7 @@
   </section>
 
 
-  <!-- ══════════════════════════════════════════════════════════
-       NEWSLETTER — coral
-  ══════════════════════════════════════════════════════════ -->
-  <section class="newsletter-section" id="afspraak">
-    <div class="container">
-      <div class="newsletter-wrap">
-        <div class="newsletter-left">
-          <h2 class="newsletter-title">Klaar om te bieden?<br>Maak een gratis afspraak.</h2>
-          <p class="newsletter-sub">Plan vandaag nog een gesprek met een gecertificeerde hypotheekadviseur. Gratis, vrijblijvend en binnen 24 uur bereikbaar.</p>
-        </div>
-        <div class="newsletter-right">
-          <div class="newsletter-form">
-            <input class="newsletter-input" type="email" placeholder="Jouw e-mailadres" aria-label="E-mailadres">
-            <button class="btn-nl">Afspraak maken</button>
-          </div>
-          <p style="margin-top:10px;font-family:'Roboto',sans-serif;font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">
-            Of bel ons direct: <strong style="color:#fff;">020 235 85 30</strong>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div id="afspraak"></div>
 
 
   <!-- ══════════════════════════════════════════════════════════
@@ -2699,6 +2681,22 @@
           openFunnel();
         });
       }
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(function(q) {
+      q.addEventListener('click', function() {
+        var item = this.closest('.faq-item');
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(function(i) {
+          i.classList.remove('open');
+          i.querySelector('.faq-icon').innerHTML = '&#43;';
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          item.querySelector('.faq-icon').innerHTML = '&#8722;';
+        }
+      });
     });
   </script>
 
